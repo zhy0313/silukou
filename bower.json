@@ -1,0 +1,8 @@
+{
+  "name": "silukou",
+  "version": "0.0.1",
+  "dependencies": {
+    "bootstrap-sass": "^3.3.7",
+    "font-awesome": "^4.7.0"
+  }
+}
