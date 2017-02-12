@@ -32,6 +32,7 @@ body {
 /* Hide for mobile, show later */
 .sidebar {
   display: none;
+  margin-bottom: 20px;
 }
 @media (min-width: 768px) {
   .sidebar {
@@ -72,12 +73,23 @@ body {
  */
 
 .main {
-  padding: 20px;
+  /*padding: 20px;*/
 }
 @media (min-width: 768px) {
   .main {
     padding-right: 40px;
     padding-left: 40px;
+
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 20px;
+    z-index: 1000;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+
   }
 }
 .main .page-header {
@@ -103,3 +115,57 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+
+/*
+ *  title 页面标题
+ */
+ .title {
+   width: 150px; 
+   text-align: center;
+   min-height: 50px;
+   line-height: 50px;
+   /*background-color: #0ff;*/
+ }
+ 
+
+/*
+ *  导航栏中的搜索框
+ */
+ .nav_search {
+   right: 0; 
+   top: 0; 
+   float: right;
+   /*background-color: #f00; */
+ }
+
+/*
+ *  系统的关闭
+ */
+ .sys_close {
+   left: 0; 
+   top: 0; 
+   float: left;
+   height: 50px;
+   /*background-color: #000; */
+   padding: 10px;
+ }
+ .sys_close button {
+   margin-right:5px;
+ }
+
+/*
+ *  底部状态栏
+ */
+ .status_navbar {
+  position: relative;
+  min-height: 20px;
+  border: 1px solid transparent;
+  }
+
+/*
+ *  底部边线
+ */
+  .main_navbar {
+    border-bottom: 1px solid #bbb;
+  }
