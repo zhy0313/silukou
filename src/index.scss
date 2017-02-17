@@ -2,505 +2,176 @@
 @import "bootstrap";
 @import "font-awesome";
 
-$editor_height: 68px;
-$editor_vertical_padding: 8px;
-$editor_horizontal_padding: 8px;
-$tabs_height: 30px;
-$timeline_height: 640px;
-$tweet_padding: 8px;
-$tweet_padding_darwin: 12px;
-$profile_image_size: 24px;
-$profile_image_offset: 9px;
-$icon_size: 48px;
-$retweeted_icon_size: 34px;
-$icon_overlay_size: 8px;
-$icon_column: $icon_size + $tweet_padding * 2;
-$tweets_header_height: 34px;
-$red: #d40d12;
-$light_grey: #b8b8b8;
-$grey: #999;
-$dark_grey: #555;
-$white: #fff;
-$dark_blue: #0084b4;
-$orange: #f4c142;
-$account_selector_top: $profile_image_size + $editor_vertical_padding;
 
-@keyframes favorite_animation {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.4); }
-  100% { transform: scale(1); }
-}
 
-// Reject over scrolling
-html,
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: Helvetica, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, "メイリオ", Meiryo, sans-serif;
+  padding-top: 50px;
 }
 
-.timeline_container {
-  color: #333;
-  position: relative;
-  user-select: none;
-  -webkit-user-select: none;
 
-  #account_selector {
-    position: absolute;
-    top: $account_selector_top - 12px;
-    left: $profile_image_offset;
-  }
+/*
+ * Global add-ons
+ */
 
-  .editor {
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+  margin-bottom: 20px;
+}
+@media (min-width: 768px) {
+  .sidebar {
     position: fixed;
-    top: 0;
+    top: 51px;
+    bottom: 0;
     left: 0;
-    background: #e5f2f7;
-    width: 100%;
-    height: $editor_height;
-    z-index: 300;
-    overflow: hidden;
-    border-top: 1px solid #bfe0ec;
-    border-bottom: 1px solid #bfe0ec;
-
-    .tweet_editor {
-      position: absolute;
-      top: $editor_vertical_padding;
-      left: $profile_image_offset + $profile_image_size + $editor_horizontal_padding;
-      width: calc(100% - #{$profile_image_offset + $profile_image_size + 2 * $editor_horizontal_padding});
-      height: $editor_height - 2 * $editor_vertical_padding;
-      resize: none;
-      border: 0;
-      outline: 0;
-      padding: 4px 6px;
-      font-size: 12px;
-      line-height: 1.2;
-      border-radius: 3px;
-      border: 1px solid #bfe0ec;
-    }
-
-    .tweet_editor:focus {
-      border: 1px solid #99cde1;
-    }
-
-    .tweet_counter {
-      position: absolute;
-      top: $profile_image_size + $profile_image_offset;
-      left: $profile_image_offset;
-      color: $grey;
-      width: 21px;
-      text-align: right;
-      display: none;
-      font-size: 12px;
-      padding-top: 2px;
-
-      &.active {
-        display: inline-block;
-      }
-
-      &.minus {
-        color: $red;
-      }
-    }
-
-    .account_wrapper {
-      position: relative;
-    }
-
-    .twitter_icon {
-      position: absolute;
-      top: $profile_image_offset;
-      left: $profile_image_offset;
-      width: $profile_image_size;
-      height: $profile_image_size;
-      border-radius: 3px;
-
-      &:hover {
-        -webkit-filter: brightness(0.80);
-        cursor: pointer;
-      }
-    }
-  }
-
-  .tabs_border {
-    position: fixed;
-    top: $editor_height;
-    left: 0;
-    width: 100%;
-    height: $tabs_height;
-    border-bottom: 1px solid #d5d5d5;
-    z-index: 0;
-  }
-
-  .tabs {
-    position: fixed;
-    top: $editor_height;
-    left: 0;
-    width: 100%;
-    height: $tabs_height;
-    z-index: 100;
-    overflow: hidden;
-    padding: 0 0 0 8px;
-  }
-
-  .tabs .tab {
-    cursor: pointer;
-    height: $tabs_height;
-    padding: 6px 8px 2px 8px;
-    font-size: 12px;
-    text-align: center;
-    list-style: none;
-    float: left;
-    position: relative;
-    margin-bottom: -1px;
-    z-index: 300;
-
-    &.lists_tab,
-    &.search_tab {
-      padding: 6px 14px;
-    }
-
-    .unread_counter {
-      display: inline-block;
-      background: $dark_blue;
-      color: $white;
-      border-radius: 6px;
-      margin-left: 4px;
-      padding: 0 5px;
-      font-weight: bold;
-      font-size: 10px;
-      line-height: 1.2;
-    }
-
-    &:hover {
-      color: $dark_blue;
-      border-bottom: 4px solid $dark_blue;
-      -webkit-transition: 0.15s ease-in-out;
-    }
-
-    &.active {
-      z-index: 2000;
-      border-bottom: 4px solid $dark_blue;
-    }
-  }
-
-  .tweets {
-    position: fixed;
-    top: $editor_height + $tabs_height;
-    left: 0;
-    background: $white;
-    width: 100%;
-    height: calc(100% - #{$editor_height + $tabs_height});
-    overflow: scroll;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
     overflow-x: hidden;
-    padding: 0;
-    display: none;
-
-    &.with_header {
-      height: calc(100% - #{$editor_height + $tabs_height + $tweets_header_height});
-      top: $editor_height + $tabs_height + $tweets_header_height;
-    }
-
-    &.active {
-      display: block;
-    }
-
-    .tweet {
-      padding: $tweet_padding;
-      list-style: none;
-      border-bottom: 1px solid #ededed;
-      font-size: 11px;
-
-      &.active {
-        background: #389cd7;
-      }
-
-      &.active {
-        .external-link {
-          color: white;
-          text-decoration: underline;
-        }
-
-        .user_name {
-          text-decoration: none;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-    }
-
-    .user_name {
-      font-weight: bold;
-      color: $dark_grey;
-      margin-right: 4px;
-    }
-
-    .tweet_body {
-      font-size: 13px;
-      color: $dark_grey;
-      line-height: 1.3;
-      padding-right: 16px;
-      user-select: auto;
-      -webkit-user-select: auto;
-      word-wrap: break-word;
-    }
-
-    .tweet_media {
-      max-width: 200px;
-      max-height: 400px;
-      margin-top: 4px;
-      border-radius: 2px;
-    }
-
-    .active .user_name,
-    .active .tweet_body {
-      color: $white;
-    }
-
-    .retweeted_by_wrapper {
-      margin-top: 6px;
-      color: $grey;
-      font-weight: bold;
-      z-index: 10;
-
-      .retweeted_by {
-        margin-right: 4px;
-      }
-    }
-
-    .active .retweeted_by_wrapper {
-      color: $white;
-    }
-
-    .screen_name {
-      font-weight: bold;
-      color: $grey;
-
-      &:before {
-        content: '@';
-      }
-    }
-
-    .name_wrapper {
-      float: left;
-      white-space: nowrap;
-      width: calc(100% - #{$icon_size + 10px});
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: $grey;
-    }
-
-    .created_at {
-      float: right;
-      color: $grey;
-    }
-
-    .active .screen_name,
-    .active .created_at {
-      color: #cdf;
-    }
-
-    .box_wrapper {
-      position: relative;
-      min-height: $icon_size;
-    }
-
-    .left_box {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: $icon_column;
-      height: $icon_column;
-    }
-
-    .right_box {
-      padding-left: $icon_size + 10px;
-
-      .tweet_entities {
-        padding-right: 16px;
-
-        .tweet_media {
-          width: 100%;
-        }
-
-        &.multiple .tweet_media {
-          margin-right: 5px;
-          width: calc(50% - 5px);
-        }
-      }
-    }
-
-    .right_widget {
-      position: absolute;
-      top: 14px;
-      right: 0;
-      color: #ccc;
-      font-size: 12px;
-
-      > .reply_button > .fa.fa-reply:hover,
-      > .favorite_widget_wrapper > .fa.fa-star.favorite_button:not(.active):hover {
-        color: $light_grey;
-      }
-    }
-
-    .active .right_widget {
-      color: #eee;
-    }
-
-    .favorite_widget_wrapper {
-      .favorite_button.active {
-        color: $orange;
-      }
-
-      &:active {
-        animation-name: favorite_animation;
-        animation-duration: 170ms;
-        animation-timing-function: linear;
-      }
-    }
-
-    .user_icon {
-      width: $icon_size;
-      height: $icon_size;
-      border-radius: 6px;
-    }
-
-    .retweeted_user_icon {
-      width: $retweeted_icon_size;
-      height: $retweeted_icon_size;
-      border-radius: 6px;
-    }
-
-    .retweet_user_icon {
-      position: absolute;
-      top: $retweeted_icon_size - $icon_overlay_size;
-      left: $retweeted_icon_size - $icon_overlay_size;
-      width: $icon_size - $retweeted_icon_size + $icon_overlay_size;
-      height: $icon_size - $retweeted_icon_size + $icon_overlay_size;
-      border-radius: 3px;
-    }
-
-    .retweet_icon {
-      position: absolute;
-      top: $icon_size - 12px;
-      left: 4px;
-      font-size: 14px;
-      color: $dark_grey;
-    }
-
-    .active .retweet_icon {
-      color: $white;
-    }
-
-    .delete_button {
-      padding-left: 1px;
-    }
-  }
-
-  .tweets_header {
-    position: absolute;
-    top: $editor_height + $tabs_height;
-    width: 100%;
-    height: $tweets_header_height;
-    background: #f5f5f5;
-    border-bottom: 1px solid #e5e5e5;
-    display: none;
-    padding: 0 20px;
-
-    &.active {
-      display: block;
-    }
-
-    .list_field {
-      margin-top: 6px;
-      width: 100%;
-      color: #888;
-      font-size: 12px;
-      border: 1px solid #ccc;
-      background: $white;
-      padding: 2px 4px 3px 4px;
-      border-radius: 3px;
-    }
-
-    .search_field {
-      margin-top: 6px;
-      width: 100%;
-      font-size: 12px;
-      border-radius: 3px;
-      border: 1px solid #ccc;
-      padding: 1px 8px;
-    }
-  }
-
-  .timeline {
-    display: none;
-
-    &.active {
-      display: block;
-    }
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
   }
 }
 
-.timeline_container.darwin {
-  $title_bar_offset: 20px;
-  $header_height: $title_bar_offset;
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
 
-  .editor {
-    height: $editor_height + $title_bar_offset;
-    border-top: 0;
-    -webkit-app-region: drag;
-  }
 
-  .tweet_editor {
-    top: $editor_vertical_padding + $title_bar_offset;
-    -webkit-app-region: no-drag;
-  }
+/*
+ * Main content
+ */
 
-  .tweet_counter {
-    top: $profile_image_size + $profile_image_offset + $title_bar_offset;
-  }
+.main {
+  /*padding: 20px;*/
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
 
-  .twitter_icon {
-    top: $profile_image_offset + $title_bar_offset;
-    -webkit-app-region: no-drag;
-  }
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 20px;
+    z-index: 1000;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
 
-  #account_selector {
-    top: $account_selector_top + $title_bar_offset + 8px;
-  }
-
-  .tabs,
-  .tabs_border {
-    top: $header_height + $editor_height;
-  }
-
-  .tweets {
-    height: calc(100% - #{$header_height + $editor_height + $tabs_height});
-    top: $header_height + $editor_height + $tabs_height;
-
-    &.with_header {
-      height: calc(100% - #{$header_height + $editor_height + $tabs_height + $tweets_header_height});
-      top: $header_height + $editor_height + $tabs_height + $tweets_header_height;
-    }
-
-    .tweet {
-      padding: $tweet_padding_darwin;
-    }
-  }
-
-  .tweets_header {
-    top: $header_height + $editor_height + $tabs_height;
-
-    .list_field {
-      font-size: 14px;
-      border-radius: 5px;
-    }
-
-    .search_field {
-      border-radius: 5px;
-    }
   }
 }
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+
+/*
+ *  title 页面标题
+ */
+ .title {
+   width: 150px; 
+   text-align: center;
+   min-height: 50px;
+   line-height: 50px;
+   /*background-color: #0ff;*/
+ }
+ 
+
+/*
+ *  导航栏中的搜索框
+ */
+ .nav_search {
+   right: 0; 
+   top: 0; 
+   float: right;
+   /*background-color: #f00; */
+ }
+
+/*
+ *  系统的关闭
+ */
+ .sys_close {
+   left: 0; 
+   top: 0; 
+   float: left;
+   height: 50px;
+   /*background-color: #000; */
+   padding: 10px;
+ }
+ .sys_close button {
+   margin-right:5px;
+ }
+
+/*
+ *  底部状态栏
+ */
+ .status_navbar {
+  position: relative;
+  min-height: 20px;
+  border: 1px solid transparent;
+  }
+
+/*
+ *  底部边线
+ */
+  .main_navbar {
+    border-bottom: 1px solid #bbb;
+  }

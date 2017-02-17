@@ -10,7 +10,8 @@ const todo = (state, action) => {
       }
     case 'TOGGLE_TODO':
       if (state.id !== action.id) {
-        return state
+        state.completed = false
+        return state 
       }
 
       return {
@@ -23,10 +24,7 @@ const todo = (state, action) => {
 }
 
 const todos = (state = [], action) => {
-  // const { nodeId } = action
-  // if (typeof nodeId === 'undefined') {
-  //   return state
-  // }
+  
   switch (action.type) {
     case 'ADD_TODO':
       return [

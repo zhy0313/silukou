@@ -7,10 +7,8 @@ import { addTodo } from '../actions'
 export default class TodoList extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {};
-    // this.store = context.store;
   }
-
+  
   static propTypes = {
     todos: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -22,16 +20,17 @@ export default class TodoList extends React.Component {
 
   render() {
     return (
-      <ul>
-        <li>中间线</li>
-        {this.props.todos.map(todo =>
-          <Todo
-            {...todo}
-            key={todo.id}
-            onClick={() => this.props.onTodoClick(todo.id)}
-          />
-        )}
-      </ul>
+      <div className="col-sm-3 col-md-2 sidebar" >
+        <ul className="nav nav-sidebar">
+          {this.props.todos.map(todo =>
+            <Todo
+              {...todo}
+              key={todo.id}
+              onClick={() => this.props.onTodoClick(todo.id)}
+            />
+          )}
+        </ul>
+      </div>
     );
   }
 }
