@@ -14,6 +14,7 @@ export default class TodoList extends React.Component {
       id: PropTypes.number.isRequired,
       completed: PropTypes.bool.isRequired,
       text: PropTypes.string.isRequired,
+      uri: PropTypes.string.isRequired,
     }).isRequired).isRequired,
     onTodoClick: PropTypes.func.isRequired
   }
@@ -26,7 +27,7 @@ export default class TodoList extends React.Component {
             <Todo
               {...todo}
               key={todo.id}
-              onClick={() => this.props.onTodoClick(todo.id)}
+              onClick={() => this.props.onTodoClick(todo.id, todo.text )}
             />
           )}
         </ul>

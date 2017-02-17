@@ -6,7 +6,8 @@ const todo = (state, action) => {
       return {
         id: action.id,
         text: action.text,
-        completed: false
+        completed: false,
+        uri:  action.uri
       }
     case 'TOGGLE_TODO':
       if (state.id !== action.id) {

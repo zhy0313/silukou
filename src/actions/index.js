@@ -10,7 +10,8 @@ export const setVisibilityFilter = (filter) => ({
   filter
 })
 
+//要把这个代码给给掉了，变成setCurrentPage 设置当前的激活的页面
 export const toggleTodo = (id) => ({
-  type: 'TOGGLE_TODO',
+  type: 'TOGGLE_TODO',  
   id
 })
