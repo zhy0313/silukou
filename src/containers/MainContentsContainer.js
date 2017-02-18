@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { toggleTodo } from '../actions'
+// import { toggleTodo } from '../actions'
 import MainContents from '../components/MainContents'
 
 //返回当前页面的url

@@ -22,9 +22,7 @@ export default class MainContents extends React.Component {
     }
 
     render() {
-      
-      
-                       
+           
           if(this.props.currentUri=='wwwwww'){
             return(
               <h1 className="page-header">{ this.props.currentUri }这里是主要内容显示区域</h1>
@@ -253,18 +251,6 @@ export default class MainContents extends React.Component {
               </div>
             )
           }
-            
-
-   
-  
-
-     
-
-      
-
-
-          
-      //   </div>
 
     }
 }

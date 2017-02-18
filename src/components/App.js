@@ -1,13 +1,13 @@
 import React from 'react'
 import Footer from './Footer'
-import Header from './Header'
+import HeaderContainer from '../containers/HeaderContainer'
 import MainContentsContainer from '../containers/MainContentsContainer'
 
 import VisibleTodoList from '../containers/VisibleTodoList'
 
 const App = () => (
   <div>
-    <Header />
+    <HeaderContainer />
 
     <div className="container-fluid">
       <div className="row">
