@@ -19,3 +19,16 @@ export const toggleTodo = (id) => ({
 export const showDownloadArea = {
   type: 'SHOW_DOWNLOAD_AREA'
 }
+
+
+//选择切换数据源
+//@para string name 数据源名称代码
+export const changeDataSource = ( name) => ({
+  type: 'CHANGE_DATA_SOURCE',  
+  name
+})
+
+//获取股票列表，这里应该是一个异步的操作
+
+
+//获取指定的股票数据，这里也是应该一个异步的操作

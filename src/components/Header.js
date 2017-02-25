@@ -38,14 +38,32 @@ const Header = ({showDownloadArea, onDownloadAreaClick}) => (
         // e.preventDefault()
         // onDownloadAreaClick()}}
                 >
-                    下载区域 <span className="caret"></span>
+                    新浪数据(优) <span className="caret"></span>
                 </a>
                 <ul className="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" className="divider"></li>
-                <li><a href="#">Separated link</a></li>
+                    <li className="active">
+                      <div className="row">
+                        <div className="col-md-2"><span className="glyphicon glyphicon-ok"></span></div>
+                        <div className="col-md-4">新浪</div>
+                        <div className="col-md-5"><span className="label label-default">Default</span></div>
+                      </div>
+                    </li>
+                    <li role="separator" className="divider"></li>
+                    <li>
+                      <div className="row">
+                        <div className="col-md-2"><span className="glyphicon "></span></div>
+                        <div className="col-md-4">腾讯</div>
+                        <div className="col-md-5"><span className="label label-default">Default</span></div>
+                      </div>
+                    </li>
+                    <li role="separator" className="divider"></li>
+                    <li>
+                      <div className="row">
+                        <div className="col-md-2"><span className="glyphicon"></span></div>
+                        <div className="col-md-4">阿里</div>
+                        <div className="col-md-5"><span className="label label-default">Default</span></div>
+                      </div>
+                    </li>
                 </ul>
             </li>
             </ul>

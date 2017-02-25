@@ -7,10 +7,10 @@ gulp.task('bower', () => {
   return bower().pipe(gulp.dest('./bower_components'));
 });
 
-gulp.task('compile-fonts', () => {
+gulp.task('compile-font-awesome', () => {
   return gulp.
     src('./bower_components/font-awesome/fonts/**.*').
-    pipe(gulp.dest('fonts'));
+    pipe(gulp.dest('app/fonts'));
 });
 
 gulp.task(
@@ -19,6 +19,7 @@ gulp.task(
     'compile-es6',
     'compile-html',
     'compile-scss',
+    'compile-font',
   ]
 );
 
@@ -44,6 +45,13 @@ gulp.task('compile-html', () => {
     src('src/**/*.html').
     pipe(gulp.dest('app'));
 });
+//将bootstrap中的字体样式传入，可能以后可以用font awesome的样式
+gulp.task('compile-font', () => {
+  return gulp.
+    src('./bower_components/bootstrap-sass/assets/fonts/**/**.*').
+    pipe(gulp.dest('app/fonts'));
+});
+
 
 gulp.task('compile-scss', () => {
   return gulp.
