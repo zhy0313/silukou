@@ -2,13 +2,13 @@ const todo = (state, action) => {
 
 
   switch (action.type) {
-    case 'ADD_TODO':
-      return {
-        id: action.id,
-        text: action.text,
-        completed: false,
-        uri:  action.uri
-      }
+    // case 'ADD_TODO':
+    //   return {
+    //     // id: action.id,
+    //     // text: action.text,
+    //     // completed: false,
+    //     // uri:  action.uri
+    //   }
     case 'TOGGLE_TODO':
       if (state.id !== action.id) {
         state.completed = false

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-const Header = ({showDownloadArea, onDownloadAreaClick}) => (
+const Header = ({data,showDownloadArea, onDownloadAreaClick,onDataSourceClick}) => (
   
     <nav className="navbar main_navbar navbar-fixed-top">
       <div className="container-fluid">
@@ -41,13 +41,15 @@ const Header = ({showDownloadArea, onDownloadAreaClick}) => (
                     新浪数据(优) <span className="caret"></span>
                 </a>
                 <ul className="dropdown-menu">
-                    <li className="active">
-                      <div className="row">
-                        <div className="col-md-2"><span className="glyphicon glyphicon-ok"></span></div>
-                        <div className="col-md-4">新浪</div>
+                    {data.dataSourceList.map(dataSource =>
+                    <li  key={dataSource.name} onClick={() => onDataSourceClick(dataSource.name)}>
+                      <div className="row" >
+                        <div className="col-md-2">{ data.currentDataSource===dataSource.name ? <span className="glyphicon glyphicon-ok"></span> : ''}</div>
+                        <div className="col-md-4">{dataSource.name}</div>
                         <div className="col-md-5"><span className="label label-default">Default</span></div>
                       </div>
                     </li>
+                    )}
                     <li role="separator" className="divider"></li>
                     <li>
                       <div className="row">
