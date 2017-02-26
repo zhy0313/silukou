@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-
+import DownloadCenter from './DownloadCenter'
 
 export default class MainContents extends React.Component {
     constructor(props) {
@@ -25,7 +25,7 @@ export default class MainContents extends React.Component {
            
           if(this.props.currentUri=='wwwwww'){
             return(
-              <h1 className="page-header">{ this.props.currentUri }这里是主要内容显示区域</h1>
+              <DownloadCenter />
             )
           }else if(this.props.currentUri=='aaaaaa'){
             return(

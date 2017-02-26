@@ -20,6 +20,7 @@ gulp.task(
     'compile-html',
     'compile-scss',
     'compile-font',
+    'compile-js',
   ]
 );
 
@@ -50,6 +51,12 @@ gulp.task('compile-font', () => {
   return gulp.
     src('./bower_components/bootstrap-sass/assets/fonts/**/**.*').
     pipe(gulp.dest('app/fonts'));
+});
+
+gulp.task('compile-js', () => {
+  return gulp.
+    src('./bower_components/jquery/dist/**.*').
+    pipe(gulp.dest('app/js'));
 });
 
 

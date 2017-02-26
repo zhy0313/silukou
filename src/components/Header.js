@@ -33,7 +33,8 @@ const Header = ({data,showDownloadArea, onDownloadAreaClick,onDataSourceClick}) 
                     className="dropdown-toggle" 
                     // data-toggle="dropdown" 
                     // role="button" 
-                    onClick={() => onDownloadAreaClick()}
+                    // onClick={() => onDownloadAreaClick()}
+                    onClick={()=>{ $('.dropdown-menu').toggle()} }  //这里添加jquery的另一种写法
         //             onClick={e => {
         // e.preventDefault()
         // onDownloadAreaClick()}}
