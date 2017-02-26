@@ -13,12 +13,17 @@
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
 
+    <link href="css/flat-ui.css" rel="stylesheet">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/starter-template.css" rel="stylesheet">
+    <link href="css/starter.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="css/bootstrap-treeview.css" rel="stylesheet">
 
+    
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.js"></script>
@@ -32,9 +37,9 @@
 
   <body>
 
-    <nav class="navbar main_navbar navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar">
+    <nav class="navbar navbar-fixed-top">
+      <div class="container-fluid main_navbar_border">
+        <!--<div class="navbar">-->
           
           <div class="sys_close">
             <div class="navbar-header">
@@ -95,7 +100,7 @@
           <div class="center-block title">
             <sapn>标题标题</sapn>
           </div>
-        </div>
+        <!--</div>-->
         
       </div>
     </nav>
@@ -130,213 +135,212 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
+         
+
           <!--这里插入数据下载中心的界面代码-->
           <div class="panel panel-default">
             <!-- Default panel contents -->
-            <div class="panel-heading">Panel heading</div>
-            <div class="panel-body">
-              <p>...</p>
-            </div>
+            <div class="panel-heading">数据下载设置</div>
+            <!--<div class="panel-body">
+              
+            </div>-->
 
             <!-- List group -->
             <ul class="list-group">
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-xs-2 text-center">品种范围</div>
+                  <div class="col-xs-10 ">
+                    <!-- Primary tags input -->
+                    <div class="tagsinput-primary">
+                      <input name="tagsinput" class="tagsinput" data-role="tagsinput" value="School, Teacher, Colleague" />
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-xs-2 text-center">数据类型</div>
+                  <div class="col-xs-10 ">
+                    <!-- Primary tags input -->
+                    <div class="tagsinput-primary">
+                      <input name="tagsinput" class="tagsinput" data-role="tagsinput" value="School, Teacher, Colleague" />
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-xs-2 text-center">时间区间</div>
+                  <div class="col-xs-10 ">
+                    <input size="16" type="text" value="2012-06-15 14:45" readonly class="form_datetime">
+                    <input size="16" type="text" value="2012-06-15 14:45" readonly class="form_datetime">
+                  </div>
+                </div>
+              </li>
+              
             </ul>
+            <ul class="list-group list-inline">
+              <li>
+                <label class="checkbox" for="checkbox1">
+                <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
+                  <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                  Checkbox
+                </label>
+              </li>
+              <li>
+                <label class="checkbox" for="checkbox2">
+                <input type="checkbox" value="" id="checkbox2" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
+                  <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                  Checkbox
+                </label>
+              </li>
+              <li>
+                <label class="checkbox" for="checkbox3">
+                <input type="checkbox" value="" id="checkbox3" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
+                  <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                  Checkbox
+                </label>
+              </li>
+              <li>
+                <label class="checkbox" for="checkbox4">
+                <input type="checkbox" value="" id="checkbox4" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
+                  <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                  Checkbox
+                </label>
+              </li>
+              <li>
+                <label class="checkbox" for="checkbox5">
+                <input type="checkbox" value="" id="checkbox5" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
+                  <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                  Checkbox
+                </label>
+              </li>
+            </ul>
+            <div id="tree"></div>
           </div>
 
+          <!--这里是下载界面中的传输详情列表-->
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">传输列表</div>
+            <!--<div class="panel-body">
+              
+            </div>-->
 
-          <h1 class="page-header">Dashboard</h1>
-
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
+            <!-- List group -->
+            <ul class="list-group">
+              <li class="list-group-item">
+                <button class="btn btn-default">开始</button>
+                <button class="btn btn-primary">暂停</button>
+                <button class="btn btn-danger">删除</button>
+              </li>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-xs-2 text-center">当前进度</div>
+                  <div class="col-xs-8 ">
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">
+                        0%
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-2 text-center">1000/10000</div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                
+    <table class="table">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>Column heading</th>
+          <th>Column heading</th>
+          <th>Column heading</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="active">
+          <th scope="row">1</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr class="success">
+          <th scope="row">3</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr class="info">
+          <th scope="row">5</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr>
+          <th scope="row">6</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr class="warning">
+          <th scope="row">7</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr>
+          <th scope="row">8</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+        <tr class="danger">
+          <th scope="row">9</th>
+          <td>Column content</td>
+          <td>Column content</td>
+          <td>Column content</td>
+        </tr>
+      </tbody>
+    </table>
+            
+              </li>
+              
+            </ul>
+            
           </div>
+<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  Link with href
+</a>
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  Button with data-target
+</button>
+<div class="collapse" id="collapseExample">
+  <div class="well">
+    ...
+  </div>
+</div>
+
+
+
+
 
           <h2 class="sub-header">Section title</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>ante</td>
-                </tr>
-                <tr>
-                  <td>1,004</td>
-                  <td>dapibus</td>
-                  <td>diam</td>
-                  <td>Sed</td>
-                  <td>nisi</td>
-                </tr>
-                <tr>
-                  <td>1,005</td>
-                  <td>Nulla</td>
-                  <td>quis</td>
-                  <td>sem</td>
-                  <td>at</td>
-                </tr>
-                <tr>
-                  <td>1,006</td>
-                  <td>nibh</td>
-                  <td>elementum</td>
-                  <td>imperdiet</td>
-                  <td>Duis</td>
-                </tr>
-                <tr>
-                  <td>1,007</td>
-                  <td>sagittis</td>
-                  <td>ipsum</td>
-                  <td>Praesent</td>
-                  <td>mauris</td>
-                </tr>
-                <tr>
-                  <td>1,008</td>
-                  <td>Fusce</td>
-                  <td>nec</td>
-                  <td>tellus</td>
-                  <td>sed</td>
-                </tr>
-                <tr>
-                  <td>1,009</td>
-                  <td>augue</td>
-                  <td>semper</td>
-                  <td>porta</td>
-                  <td>Mauris</td>
-                </tr>
-                <tr>
-                  <td>1,010</td>
-                  <td>massa</td>
-                  <td>Vestibulum</td>
-                  <td>lacinia</td>
-                  <td>arcu</td>
-                </tr>
-                <tr>
-                  <td>1,011</td>
-                  <td>eget</td>
-                  <td>nulla</td>
-                  <td>Class</td>
-                  <td>aptent</td>
-                </tr>
-                <tr>
-                  <td>1,012</td>
-                  <td>taciti</td>
-                  <td>sociosqu</td>
-                  <td>ad</td>
-                  <td>litora</td>
-                </tr>
-                <tr>
-                  <td>1,013</td>
-                  <td>torquent</td>
-                  <td>per</td>
-                  <td>conubia</td>
-                  <td>nostra</td>
-                </tr>
-                <tr>
-                  <td>1,014</td>
-                  <td>per</td>
-                  <td>inceptos</td>
-                  <td>himenaeos</td>
-                  <td>Curabitur</td>
-                </tr>
-                <tr>
-                  <td>1,015</td>
-                  <td>sodales</td>
-                  <td>ligula</td>
-                  <td>in</td>
-                  <td>libero</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+
+
         </div>
       </div>
     </div>
@@ -362,8 +366,74 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
-  
+    <script src="js/flat-ui.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.js"></script>
+    <script src="js/bootstrap-treeview.js"></script>
+    <script type="text/javascript">
+      $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+    </script>   
+
     <!-- Insert this line after script imports -->
     <script>if (window.module) module = window.module;</script>
+    <script>
+function getTree() {
+  // Some logic to retrieve, or generate tree structure
+  return data;
+}
+var tree = [
+  {
+    text: "Parent 1",
+    nodes: [
+      {
+        text: "Child 1",
+        nodes: [
+          {
+            text: "Grandchild 1"
+          },
+          {
+            text: "Grandchild 2"
+          }
+        ]
+      },
+      {
+        text: "Child 2"
+      }
+    ]
+  },
+  {
+    text: "Parent 2"
+  },
+  {
+    text: "Parent 3"
+  },
+  {
+    text: "Parent 4"
+  },
+  {
+    text: "Parent 5"
+  }
+];
+$('#tree').treeview(
+  {
+    data: tree,
+          color: "#428bca",
+          expandIcon: "glyphicon glyphicon-stop",
+          collapseIcon: "glyphicon glyphicon-unchecked",
+          nodeIcon: "glyphicon glyphicon-user",
+          showTags: true,
+          
+
+          expandIcon: "glyphicon glyphicon-stop",
+          collapseIcon: "glyphicon glyphicon-unchecked",
+          nodeIcon: "glyphicon glyphicon-user",
+        
+        
+          showBorder: false,
+          showTags: true,
+          highlightSelected: true,
+  }
+);
+
+    </script>
 
 </body></html>

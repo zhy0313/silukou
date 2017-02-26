@@ -73,7 +73,7 @@ body {
  */
 
 .main {
-  /*padding: 20px;*/
+  padding-top: 20px;
 }
 @media (min-width: 768px) {
   .main {
@@ -166,7 +166,7 @@ body {
 /*
  *  底部边线
  */
-  .main_navbar {
+  .main_navbar_border {
     border-bottom: 1px solid #bbb;
   }
 
