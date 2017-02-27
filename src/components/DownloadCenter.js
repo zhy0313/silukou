@@ -1,5 +1,8 @@
 import React from 'react'
 
+import { TaggedInput } from 'react-tagged-input'
+
+
 //DOWNLOADCENTER
 
 const DownloadCenter = () => (
@@ -17,9 +20,9 @@ const DownloadCenter = () => (
                   <div className="col-xs-2 text-center">品种范围</div>
                   <div className="col-xs-10 ">
                     
-                    <div className="tagsinput-primary">
-                      <input name="tagsinput" className="tagsinput" data-role="tagsinput" value="School, Teacher, Colleague" />
-                    </div>
+ 
+
+
                   </div>
                 </div>
               </li>
@@ -40,7 +43,7 @@ const DownloadCenter = () => (
                   <div className="col-xs-10 ">
                     
                     <div className="tagsinput-primary">
-                      <input name="tagsinput" className="tagsinput" data-role="tagsinput" value="School, Teacher, Colleague" />
+                      <input name="tagsinput" className="tagsinput" data-role="tagsinput" defaultValue="School, Teacher, Colleague" />
                     </div>
                   </div>
                 </div>
@@ -52,8 +55,8 @@ const DownloadCenter = () => (
                     
                     <ul className="list-group list-inline">
                       <li>
-                        <label className="checkbox" for="checkbox1">
-                          <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox" className="custom-checkbox" />
+                        <label className="checkbox" htmlFor="checkbox1">
+                          <input type="checkbox" defaultValue="" id="checkbox1" data-toggle="checkbox" className="custom-checkbox" />
                           <span className="icons">
                             <span className="icon-unchecked"></span>
                             <span className="icon-checked"></span>
@@ -62,8 +65,8 @@ const DownloadCenter = () => (
                         </label>
                       </li>
                       <li>
-                        <label className="checkbox" for="checkbox2">
-                        <input type="checkbox" value="" id="checkbox2" data-toggle="checkbox" className="custom-checkbox" />
+                        <label className="checkbox" htmlFor="checkbox2">
+                        <input type="checkbox" defaultValue="" id="checkbox2" data-toggle="checkbox" className="custom-checkbox" />
                           <span className="icons">
                             <span className="icon-unchecked"></span>
                             <span className="icon-checked"></span>
@@ -72,8 +75,8 @@ const DownloadCenter = () => (
                         </label>
                       </li>
                       <li>
-                        <label className="checkbox" for="checkbox3">
-                          <input type="checkbox" value="" id="checkbox3" data-toggle="checkbox" className="custom-checkbox" />
+                        <label className="checkbox" htmlFor="checkbox3">
+                          <input type="checkbox" defaultValue="" id="checkbox3" data-toggle="checkbox" className="custom-checkbox" />
                           <span className="icons">
                             <span className="icon-unchecked"></span>
                             <span className="icon-checked"></span>
@@ -82,8 +85,8 @@ const DownloadCenter = () => (
                         </label>
                       </li>
                       <li>
-                        <label className="checkbox" for="checkbox4">
-                          <input type="checkbox" value="" id="checkbox4" data-toggle="checkbox" className="custom-checkbox" />
+                        <label className="checkbox" htmlFor="checkbox4">
+                          <input type="checkbox" defaultValue="" id="checkbox4" data-toggle="checkbox" className="custom-checkbox" />
                           <span className="icons">
                             <span className="icon-unchecked"></span>
                             <span className="icon-checked"></span>
@@ -99,8 +102,8 @@ const DownloadCenter = () => (
                 <div className="row">
                   <div className="col-xs-2 text-center">时间区间</div>
                   <div className="col-xs-10 ">
-                    <input size="16" type="text" value="2012-06-15 14:45" readonly className="form_datetime" />
-                    <input size="16" type="text" value="2012-06-15 14:45" readonly className="form_datetime" />
+                    <input size="16" type="text" defaultValue="2012-06-15 14:45" readOnly className="form_datetime" />
+                    <input size="16" type="text" defaultValue="2012-06-15 14:45" readOnly className="form_datetime" />
                   </div>
                 </div>
               </li>

@@ -28,6 +28,7 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
+    "react-tagged-input": "^0.0.18",
     "redux": "^3.6.0"
   }
 }
