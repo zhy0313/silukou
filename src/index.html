@@ -3,8 +3,8 @@
   <head>
     <title>Nocturn</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="index.css">
-    <script>window.$ = window.jQuery = require('./js/jquery.min.js');</script>
+    <link rel="stylesheet" href="static/index.css">
+    <script>window.$ = window.jQuery = require('static/js/jquery.min.js');</script>
   </head>
   <body>
     <div id="root"></div>
@@ -12,7 +12,7 @@
   </body>
       <!-- Insert this line above script imports  -->
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-    <script src="js/jquery.min.js"></script>
+    <script src="static/js/jquery.min.js"></script>
     <!-- Insert this line after script imports -->
     <script>if (window.module) module = window.module;</script>
 

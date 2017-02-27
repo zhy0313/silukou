@@ -23,7 +23,7 @@ export default class MainContents extends React.Component {
 
     render() {
            
-          if(this.props.currentUri=='wwwwww'){
+          if(this.props.currentUri=='DOWNLOADCENTER'){
             return(
               <DownloadCenter />
             )

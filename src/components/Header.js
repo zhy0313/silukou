@@ -6,16 +6,16 @@ const Header = ({data,showDownloadArea, onDownloadAreaClick,onDataSourceClick}) 
       <div className="container-fluid">
           
         <div className="sys_close">
-        <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span className="sr-only">Toggle navigation</span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            </button>
-            <button type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <button type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
+            <div className="navbar-header">
+                <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
+                </button>
+                <button type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
         </div>
         <div className="nav_search">
         <div className="collapse navbar-collapse" >
@@ -29,12 +29,9 @@ const Header = ({data,showDownloadArea, onDownloadAreaClick,onDataSourceClick}) 
                 </form>
             </li>
             <li className={showDownloadArea?"dropdown open":"dropdown"} >
-                <a href="#" 
-                    className="dropdown-toggle" 
-                    // data-toggle="dropdown" 
-                    // role="button" 
-                    // onClick={() => onDownloadAreaClick()}
-                    onClick={()=>{ $('.dropdown-menu').toggle()} }  //这里添加jquery的另一种写法
+                <a href="#" className="dropdown-toggle" 
+                    onClick={() => onDownloadAreaClick()}
+                    // onClick={()=>{ $('.dropdown-menu').toggle()} }  //这里添加jquery的另一种写法
         //             onClick={e => {
         // e.preventDefault()
         // onDownloadAreaClick()}}

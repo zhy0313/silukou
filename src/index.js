@@ -9,7 +9,7 @@ import configureStore from './store/configureStore'
 
 let todos = {
   todos:[
-    {text: 'Sporting1 Goods',uri: 'wwwwww', completed: false, id: 0,sdf:0,qw:0},
+    {text: '下载中心',uri: 'DOWNLOADCENTER', completed: false, id: 0,sdf:0,qw:0},
     {text: 'Sporting2 Goods',uri: 'aaaaaa', completed: false,  id: 1},
     {text: 'Sporting3 Goods',uri: 'bbbbbbb', completed: false,  id: 2},
     {text: 'Electro4nics',uri: 'ccccccc', completed: false,  id: 3},

@@ -11,9 +11,10 @@
     <title>Starter Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <!--<link href="css/bootstrap.css" rel="stylesheet">-->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
-    <link href="css/flat-ui.css" rel="stylesheet">
+    <!--<link href="css/flat-ui.css" rel="stylesheet">-->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
@@ -133,6 +134,7 @@
             <li><a href="">Another nav item</a></li>
           </ul>
         </div>
+
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
          
@@ -158,6 +160,17 @@
                   </div>
                 </div>
               </li>
+              <li class="list-group-item" class="collapse" id="collapseExample1">
+                <div class="row">
+                  <div class="col-xs-10 ">
+                    <!-- 选择树结构 -->
+                    <div id="tree"></div>
+                  </div>
+                  <div class="col-xs-2">
+                    <button class="btn btn-primary" onclick="$('#collapseExample1').hide()">开始</button>
+                  </div>
+                </div>
+              </li>
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-xs-2 text-center">数据类型</div>
@@ -166,6 +179,44 @@
                     <div class="tagsinput-primary">
                       <input name="tagsinput" class="tagsinput" data-role="tagsinput" value="School, Teacher, Colleague" />
                     </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item" id="data_type_choice">
+                <div class="row">
+                  <div class="col-xs-2"></div>
+                  <div class="col-xs-10 ">
+                    <!--数据类型选择-->
+                    <ul class="list-group list-inline">
+                      <li>
+                        <label class="checkbox" for="checkbox1">
+                        <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
+                          <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                          Checkbox
+                        </label>
+                      </li>
+                      <li>
+                        <label class="checkbox" for="checkbox2">
+                        <input type="checkbox" value="" id="checkbox2" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
+                          <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                          Checkbox
+                        </label>
+                      </li>
+                      <li>
+                        <label class="checkbox" for="checkbox3">
+                        <input type="checkbox" value="" id="checkbox3" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
+                          <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                          Checkbox
+                        </label>
+                      </li>
+                      <li>
+                        <label class="checkbox" for="checkbox4">
+                        <input type="checkbox" value="" id="checkbox4" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
+                          <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+                          Checkbox
+                        </label>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </li>
@@ -180,44 +231,6 @@
               </li>
               
             </ul>
-            <ul class="list-group list-inline">
-              <li>
-                <label class="checkbox" for="checkbox1">
-                <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
-                  <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                  Checkbox
-                </label>
-              </li>
-              <li>
-                <label class="checkbox" for="checkbox2">
-                <input type="checkbox" value="" id="checkbox2" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
-                  <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                  Checkbox
-                </label>
-              </li>
-              <li>
-                <label class="checkbox" for="checkbox3">
-                <input type="checkbox" value="" id="checkbox3" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
-                  <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                  Checkbox
-                </label>
-              </li>
-              <li>
-                <label class="checkbox" for="checkbox4">
-                <input type="checkbox" value="" id="checkbox4" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
-                  <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                  Checkbox
-                </label>
-              </li>
-              <li>
-                <label class="checkbox" for="checkbox5">
-                <input type="checkbox" value="" id="checkbox5" data-toggle="checkbox" class="custom-checkbox"><span class="icons">
-                  <span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                  Checkbox
-                </label>
-              </li>
-            </ul>
-            <div id="tree"></div>
           </div>
 
           <!--这里是下载界面中的传输详情列表-->
@@ -227,7 +240,6 @@
             <!--<div class="panel-body">
               
             </div>-->
-
             <!-- List group -->
             <ul class="list-group">
               <li class="list-group-item">
@@ -250,93 +262,91 @@
               </li>
               <li class="list-group-item">
                 
-    <table class="table">
-      <thead>
-        <tr>
-          <th>序号</th>
-          <th>Column heading</th>
-          <th>Column heading</th>
-          <th>Column heading</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="active">
-          <th scope="row">1</th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="success">
-          <th scope="row">3</th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr>
-          <th scope="row">4</th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="info">
-          <th scope="row">5</th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr>
-          <th scope="row">6</th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="warning">
-          <th scope="row">7</th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr>
-          <th scope="row">8</th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr class="danger">
-          <th scope="row">9</th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-      </tbody>
-    </table>
-            
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>序号</th>
+                      <th>Column heading</th>
+                      <th>Column heading</th>
+                      <th>Column heading</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="active">
+                      <th scope="row">1</th>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                    </tr>
+                    <tr class="success">
+                      <th scope="row">3</th>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">4</th>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                    </tr>
+                    <tr class="info">
+                      <th scope="row">5</th>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">6</th>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                    </tr>
+                    <tr class="warning">
+                      <th scope="row">7</th>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">8</th>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                    </tr>
+                    <tr class="danger">
+                      <th scope="row">9</th>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                    </tr>
+                  </tbody>
+                </table>
+                
               </li>
               
             </ul>
             
           </div>
-<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-  Link with href
-</a>
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-  Button with data-target
-</button>
-<div class="collapse" id="collapseExample">
-  <div class="well">
-    ...
-  </div>
-</div>
 
 
-
-
+          <!--<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Link with href
+          </a>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Button with data-target
+          </button>
+          <div class="collapse" id="collapseExample">
+            <div class="well">
+              ...
+            </div>
+          </div>-->
 
           <h2 class="sub-header">Section title</h2>
 
