@@ -48,22 +48,7 @@ const Header = ({data,showDownloadArea, onDownloadAreaClick,onDataSourceClick}) 
                       </div>
                     </li>
                     )}
-                    <li role="separator" className="divider"></li>
-                    <li>
-                      <div className="row">
-                        <div className="col-md-2"><span className="glyphicon "></span></div>
-                        <div className="col-md-4">腾讯</div>
-                        <div className="col-md-5"><span className="label label-default">Default</span></div>
-                      </div>
-                    </li>
-                    <li role="separator" className="divider"></li>
-                    <li>
-                      <div className="row">
-                        <div className="col-md-2"><span className="glyphicon"></span></div>
-                        <div className="col-md-4">阿里</div>
-                        <div className="col-md-5"><span className="label label-default">Default</span></div>
-                      </div>
-                    </li>
+                    
                 </ul>
             </li>
             </ul>

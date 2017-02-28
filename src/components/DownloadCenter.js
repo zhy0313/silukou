@@ -7,6 +7,8 @@ import TreeView from 'treeview-react-bootstrap';
 import TaggedInput from '../components/TaggedInput'
 //DOWNLOADCENTER
 
+// var DateTimeField = require('react-bootstrap-datetimepicker');
+import DateTimeField from 'react-bootstrap-datetimepicker'
 
 
 const DownloadCenter = ( {tv} ) => (
@@ -118,8 +120,9 @@ const DownloadCenter = ( {tv} ) => (
                 <div className="row">
                   <div className="col-xs-2 text-center">时间区间</div>
                   <div className="col-xs-10 ">
-                    <input size="16" type="text" defaultValue="2012-06-15 14:45" readOnly className="form_datetime" />
-                    <input size="16" type="text" defaultValue="2012-06-15 14:45" readOnly className="form_datetime" />
+                    <DateTimeField />
+                    <DateTimeField />
+                    
                   </div>
                 </div>
               </li>
