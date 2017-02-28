@@ -21,8 +21,8 @@ gulp.task(
     'compile-es6',
     'compile-html',
     'compile-less',
-    'compile-font',
     'compile-js',
+    'compile-font',
   ]
 );
 
@@ -49,10 +49,13 @@ gulp.task('compile-html', () => {
     pipe(gulp.dest('app'));
 });
 
-//将bootstrap中的字体样式传入，可能以后可以用font awesome的样式
+//将bootstrap和flat-ui中的字体样式传入，可能以后可以用font awesome的样式
 gulp.task('compile-font', () => {
   return gulp.
-    src('./bower_components/bootstrap/fonts/**.*').
+    src([
+      './bower_components/bootstrap/fonts/**.*',
+      './bower_components/flat-ui/fonts/**/**.*',
+    ]).
     pipe(gulp.dest('app/static/fonts'));
 });
 
@@ -62,7 +65,7 @@ gulp.task('compile-js', () => {
     pipe(gulp.dest('app/static/js'));
 });
 
-
+//通过sass编译
 // gulp.task('compile-scss', () => {
 //   return gulp.
 //     src('src/**/*.less').
@@ -84,6 +87,7 @@ gulp.task('compile-less', function () {
       paths: [ 
           './bower_components/bootstrap/less',
           './bower_components/font-awesome/less',
+          './bower_components/flat-ui/less',
       ]
     }))
     .pipe(gulp.dest('app/static'));

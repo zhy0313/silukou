@@ -6,6 +6,7 @@ import App from './components/App'
 // import reducer from './reducers'
 import configureStore from './store/configureStore'
 
+ import TreeView from 'treeview-react-bootstrap';
 
 let todos = {
   todos:[
@@ -26,7 +27,30 @@ let todos = {
   }
 };
 
-
+var data = [
+  {
+    text: "Parent 1",
+    nodes: [
+      {
+        text: "Child 1",
+        nodes: [
+          {
+            text: "Grandchild 1"
+          },
+          {
+            text: "Grandchild 2"
+          }
+        ]
+      },
+      {
+        text: "Child 2"
+      }
+    ]
+  },
+  {
+    text: "Parent 2"
+  }
+];
 const store = configureStore( todos)
 
 render(
@@ -35,3 +59,15 @@ render(
   </Provider>,
   document.getElementById('root')
 )
+// render(
+//   <Provider store={store}>
+//     <TreeView data={data} />,
+//   </Provider>,
+//   document.getElementById('root')
+// )
+
+// render(                
+// 	React.createElement(TreeView, {data: data}),
+// 	document.getElementById('root')
+//   );
+

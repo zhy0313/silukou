@@ -13,10 +13,34 @@ const getMainContentsUri = (state) => {
         }
     }
 }
-
+var data = [
+  {
+    text: "Parent 1",
+    nodes: [
+      {
+        text: "Child 1",
+        nodes: [
+          {
+            text: "Grandchild 1"
+          },
+          {
+            text: "Grandchild 2"
+          }
+        ]
+      },
+      {
+        text: "Child 2"
+      }
+    ]
+  },
+  {
+    text: "Parent 2"
+  }
+];
 
 const mapStateToProps = (state) => ({
-  currentUri: getMainContentsUri(state )
+  currentUri: getMainContentsUri(state ),
+  tv:data,
 })
 
 const mapDispatchToProps =  ({

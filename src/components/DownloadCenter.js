@@ -1,11 +1,15 @@
 import React from 'react'
 
-import { TaggedInput } from 'react-tagged-input'
+// import TaggedInput from 'react-tagged-input'  //不用这个，好像有问题，还是我自己的问题啦，好吧
+import TreeView from 'treeview-react-bootstrap';
 
 
+import TaggedInput from '../components/TaggedInput'
 //DOWNLOADCENTER
 
-const DownloadCenter = () => (
+
+
+const DownloadCenter = ( {tv} ) => (
 
 <div id='downloadcenter'>
 
@@ -20,7 +24,17 @@ const DownloadCenter = () => (
                   <div className="col-xs-2 text-center">品种范围</div>
                   <div className="col-xs-10 ">
                     
- 
+    <TaggedInput
+    autofocus={true}
+    backspaceDeletesWord={true}
+    placeholder={'Name some fruits'}
+    unique={true}
+    onBeforeAddTag={function() { return true; }}
+    onAddTag={function() { console.log('Tag added', arguments); }}
+    onBeforeRemoveTag={function() { return true; }}
+    onRemoveTag={function() { console.log('Tag removed', arguments); }}
+    tags={['one', 'two', 'three']}
+  />
 
 
                   </div>
@@ -30,7 +44,9 @@ const DownloadCenter = () => (
                 <div className="row">
                   <div className="col-xs-10 ">
                     
-                    <div id="tree"></div>
+
+{React.createElement(TreeView, {data: data})}
+
                   </div>
                   <div className="col-xs-2">
                     <button className="btn btn-primary" >开始</button>
