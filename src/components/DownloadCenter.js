@@ -18,7 +18,12 @@ const DownloadCenter = ( {tv} ) => (
 
           <div className="panel panel-default">
             
-            <div className="panel-heading">数据下载设置</div>
+            <div className="panel-heading">
+              数据下载设置
+              <div className="pull-right">
+                <a href="#fakelink" className="btn btn-block btn-xs btn-success">点击设置</a>
+              </div>
+            </div>
 
             <ul className="list-group">
               <li className="list-group-item">

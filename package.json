@@ -33,6 +33,7 @@
     "react-tag-input": "^4.6.2",
     "react-tagged-input": "^0.0.18",
     "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
     "treeview-react-bootstrap": "^0.4.6"
   }
 }

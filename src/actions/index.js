@@ -1,3 +1,8 @@
+import fetch from 'isomorphic-fetch'
+
+//引入自定义的类，获取网络数据类
+import GetData from '../utils/GetData';
+
 let nextTodoId = 6 // 先这样，预定义的那几个的加入，所以要防止键的重复
 export const addTodo = (text) => ({
   type: 'ADD_TODO',
@@ -28,7 +33,61 @@ export const changeDataSource = ( name) => ({
   name
 })
 
-//获取股票列表，这里应该是一个异步的操作
 
+/**
+ * 定义获取股票列表的行为，被异步函数调用
+ * 参数 dataSource 字符串 存储设定好的，引用数据源
+ * 参数 stockList 一个对象数组 存储从该数据源引入的股票列表数据(之前已经下载过的，有本地json就先加载本地的。本地json如果是当天更新的，就不检查
+ * 否则，就异步检查该文本是否与数据源的列表同步)
+ * */
+export const loadStockList = ( json ) => ({
+  type: 'LOAD_STOCK_LIST', 
+  stockList: json,
+})
 
-//获取指定的股票数据，这里也是应该一个异步的操作
+//https://www.reddit.com/r/frontend.json
+export function fetchPosts() {
+  return dispatch => {
+    // dispatch(loadStockList('first'))  //请求前的action
+    // return fetch(`http://www.reddit.com/r/frontend.json`)
+    //   .then(response => response.json())
+    //   .then(json => dispatch(loadStockList( json)))  //请求后的action
+
+    //这里可以放一个dispatch用来发送一个同步消息，表示程序以及执行到这一步了
+    var options = {
+      hostname: 'cnodejs.org',
+      path: '/topic/533ba719b267342678006e48',
+    };
+    var callback = function( data ){
+      // console.log( data.length );
+      //回调函数，当获取到数据的时候，dispatch到指定action function中
+      dispatch(loadStockList( data));
+    }
+    var client = new GetData(options)
+    return client.get(callback);
+  }
+}
+
+/**
+ * 获取指定的股票数据，这里也是应该一个异步的操作
+ * 
+ * 这个函数应该依赖 Redux thunk middleware
+ * */
+export const stockList = () => (dispatch, getState) => {
+  // var data = getState().data;
+  // var currentDataSource = data.currentDataSource;
+  // var stockList = data.stockList;
+  //注意，切换数据源的时候，也需要切换stockList,所以要将之前，切换数据源的代码稍微改一下
+  //这里就设定数据源切换，自动也切换stockList
+  //所以，这里首先看数据源是否一致
+  //然后，再看是否存在stockList，不存在，则再看数据源，根据不同的数据源请求不同的数据
+  //最后，看本地是否有对应的json,否则，向网络提交
+  //最后，返回一个promise
+  // if(dataSource==currentDataSource){
+  //   if(stockList==null || stockList=="undefined" || stockList==""){
+
+      return dispatch(fetchPosts());
+  //   }
+  // }
+
+}

@@ -23,11 +23,21 @@ function data(data = {}, action) {
   return {
     currentDataSource: setCurrentDataSource(data.currentDataSource, action),
     dataSourceList: dataSourceList(data.dataSourceList, action),
-    general: {},
+    stockList: getStockList(data.stockList,action),
     download: {}
   }
 }
 
+/**
+ * 获取股票列表数据数据
+ */
+const getStockList = (state, action) => {
+    
+    if(action.type == 'LOAD_STOCK_LIST'){
+        return action.stockList;
+    }
+    
+}
 
 
 export default data
