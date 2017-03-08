@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 
 //引入自定义的类，获取网络数据类
-import GetData from '../utils/GetData';
+import netOperate from '../utils/netOperate';
 
 let nextTodoId = 6 // 先这样，预定义的那几个的加入，所以要防止键的重复
 export const addTodo = (text) => ({
@@ -58,13 +58,25 @@ export function fetchPosts() {
       hostname: 'cnodejs.org',
       path: '/topic/533ba719b267342678006e48',
     };
-    var callback = function( data ){
-      // console.log( data.length );
-      //回调函数，当获取到数据的时候，dispatch到指定action function中
-      dispatch(loadStockList( data));
-    }
-    var client = new GetData(options)
-    return client.get(callback);
+    // var callback = function( data ){
+    //   // console.log( data.length );
+    //   //回调函数，当获取到数据的时候，dispatch到指定action function中
+    //   dispatch(loadStockList( data));
+    // }
+    //这个是之前的做法，使用回调函数，现在的做法是通过promise来实现，就是下面那串代码
+    // var client = new GetData(options)
+    // return client.get(callback);
+    var no = netOperate.create();  
+    no.get( options ).then((data)=>{
+        //测试输出数据
+        dispatch(loadStockList( data));
+    }).catch(function(reason){
+        console.log('rejected');
+        console.log(reason);
+        return
+    });
+
+
   }
 }
 
@@ -91,3 +103,13 @@ export const stockList = () => (dispatch, getState) => {
   // }
 
 }
+
+
+
+/**
+ * 下载股票列表的action，会被自己写的middleware接收到
+ */
+export const downStockList = (data) => ({
+  type: 'DOWN_STOCK_LIST',
+  data
+})

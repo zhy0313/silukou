@@ -14,7 +14,7 @@ class App extends Component {
 
     //发送异步的方法
     // dispatch(fetchPostsIfNeeded(selectedReddit))
-    dispatch(fetchPosts() )  //尝试获取数据，一个测试 
+    // dispatch(fetchPosts() )  //尝试获取数据，一个测试 
     //现在写这里倒是不是必须的，因为这里表示的是，加载这个模块的时候，就运行这个dispatch
     //我需要的是，点击数据源运行，所以，这里只是一个测试而已
   }

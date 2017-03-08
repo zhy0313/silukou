@@ -24,7 +24,7 @@ function data(data = {}, action) {
     currentDataSource: setCurrentDataSource(data.currentDataSource, action),
     dataSourceList: dataSourceList(data.dataSourceList, action),
     stockList: getStockList(data.stockList,action),
-    download: {}
+    download: getStockList1(data.download,action)
   }
 }
 
@@ -35,6 +35,16 @@ const getStockList = (state, action) => {
     
     if(action.type == 'LOAD_STOCK_LIST'){
         return action.stockList;
+    }
+    
+}
+/**
+ * 通过middleware获取所有股票代码
+ */
+const getStockList1 = (state, action) => {
+    
+    if(action.type == 'DOWN_STOCK_LIST'){
+        return action.data;
     }
     
 }
