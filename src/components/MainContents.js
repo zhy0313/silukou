@@ -27,11 +27,11 @@ export default class MainContents extends React.Component {
 
         if(this.props.currentUri=='DOWNLOADCENTER'){
         return(
-            <DownloadCenter />
+            <DownloadCenter tv={this.props.tv}  />
         )
         }else if(this.props.currentUri=='CHARTCENTER'){
         return(
-            <BarChart data={this.props.chartData} options={this.props.chartOptions} width="90%" height="90%"/>
+            <BarChart data={this.props.chartData} options={this.props.chartOptions} width="90%" height="50%"/>
             
         )
         }else if(this.props.currentUri=='bbbbbbb'){

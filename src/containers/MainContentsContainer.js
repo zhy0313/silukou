@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-// import { toggleTodo } from '../actions'
+import { toggleTodo,willDownItem } from '../actions'
 import MainContents from '../components/MainContents'
 
 //返回当前页面的url
@@ -15,7 +15,7 @@ const getMainContentsUri = (state) => {
 }
 var data = [
   {
-    text: "Parent 1",
+    text: "Paresdfsdnt 1",
     nodes: [
       {
         text: "Child 1",
@@ -121,7 +121,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps =  ({
-//   onTodoClick: toggleTodo
+  onTodoClick: toggleTodo,
+//   onWillDownItem: (items) => {
+//     dispatch(willDownItem(items))
+//   }
 })
 
 

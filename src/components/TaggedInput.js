@@ -1,6 +1,8 @@
 'use-strict';
-var React = require('react');
-
+// var React = require('react');
+import { connect } from 'react-redux'
+import React, { PropTypes } from 'react'
+import { toggleTodo,willDownItem } from '../actions'
 var KEY_CODES = {
   ENTER: 13,
   BACKSPACE: 8
@@ -59,8 +61,9 @@ var DefaultTagComponent = React.createClass({
 
 });
 
-module.exports = React.createClass({
-  displayName: 'TaggedInput',
+var txt = React.createClass({
+// module.exports = React.createClass({
+  // displayName: 'TaggedInput',
   //类型检查
   propTypes: {
     onBeforeAddTag: React.PropTypes.func,
@@ -97,7 +100,7 @@ module.exports = React.createClass({
       },
       onBeforeRemoveTag: function (index) {
         return true;
-      }
+      },
     };
   },
   //初始化状态state
@@ -138,6 +141,7 @@ module.exports = React.createClass({
           onEdit={p.clickTagToEdit ? self._handleEditTag.bind(this, i) : null}
           classes={p.unique && (i === s.duplicateIndex) ? 'duplicate' : ''}
           removeTagLabel={p.removeTagLabel || "\u274C"} //添加删除文件记号
+         
         />
       );
     }
@@ -155,6 +159,7 @@ module.exports = React.createClass({
         defaultValue={s.currentInput}  //当前的输入值
         placeholder={placeholder}
         tabIndex={p.tabIndex}>
+        
       </input>
       );
 
@@ -171,18 +176,21 @@ module.exports = React.createClass({
   },
   //组件更新，组件有变化
   componentDidMount: function () {
-    var self = this, s = self.state, p = self.props;
+    // var self = this, s = self.state, p = self.props;
 
-    if (p.autofocus) {
-      self.refs.input; //获取input的输入数据
-      // console.log( self.refs.input )
-    }
+    // if (p.autofocus) {
+    //   self.refs.input; //获取input的输入数据
+    //   console.log( self.refs.input )
+    // }
   },
   //组件更新，组件从prop收到数据
   componentWillReceiveProps: function (nextProps) {
-    this.setState({
-      tags: (nextProps.tags || []).slice(0)
-    })
+    console.log( 'nextProps'+nextProps )
+    dispatch(willDownItem(nextProps.tags))
+    // this.setState({
+    //   // this.props.
+    //   // tags: (nextProps.tags || []).slice(0)
+    // })
   },
   //处理移除标记
   _handleRemoveTag: function (index) {
@@ -294,7 +302,7 @@ module.exports = React.createClass({
   _handleClickOnWrapper: function (e) {
     this.refs.input;
   },
-  //验证和标记
+  //验证和标记 
   _validateAndTag: function (tagText, callback) {
     var self = this, s = self.state, p = self.props;
     var duplicateIndex;
@@ -322,6 +330,7 @@ module.exports = React.createClass({
             duplicateIndex: null
           }, function () {
             p.onAddTag && p.onAddTag(tagText, s.tags);
+            p.onWillDownItem( s.tags )
             callback && callback(true);
           });
         } else {
@@ -362,3 +371,37 @@ module.exports = React.createClass({
   }
 
 });
+
+
+
+
+
+//通过下面这些代码，与系统中的state保有连接
+const mapStateToProps = (state ) => ({
+  // items: state.data.willdown.willdownItem
+  items: "只是做一个测试"
+})
+
+
+
+const mapDispatchToProps = (dispatch) => ({
+  onWillDownItem: (items) => {
+    dispatch(willDownItem(items))
+  }
+})
+
+const TaggedInput = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(txt)
+
+export default TaggedInput
+
+
+/**
+ * state是组件内的，维护组件内部状态的一个东西
+ * props是组件外部穿件组件内部的东西
+ * 组件内部发生的变化，引起组件自己发生变化，就是通过state来运作的
+ * 外部通过，props传入函数定义一个dispath来获取变化的state，并发送出来如果你想要的
+ * 这样我应该理解的多一点了
+ */

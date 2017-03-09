@@ -500,11 +500,30 @@ var config = {
             }
         }
         //放其他数据源的相关信息
+    },
+    //软件初始化的配置项目
+    todos : {
+        //菜单项目的初始化
+        todos:[
+            {text: '下载中心',uri: 'DOWNLOADCENTER', completed: false, id: 0,sdf:0,qw:0},
+            {text: '图表中心',uri: 'CHARTCENTER', completed: false,  id: 1},
+            {text: 'Sporting3 Goods',uri: 'bbbbbbb', completed: false,  id: 2},
+            {text: 'Electro4nics',uri: 'ccccccc', completed: false,  id: 3},
+            {text: 'Electro5nics',uri: 'dddddd', completed: false,  id: 4},
+            {text: 'Electron6ics',uri: 'eeeeeee', completed: true,  id: 5}
+        ],
+        //数据源的初始化
+        data:{
+            dataSourceList:[
+                {name:'SINA', status:'OFF', speed:0},
+                {name:'QQ', status:'OFF', speed:0},
+                {name:'ALI', status:'OFF', speed:0},
+            ],
+            currentDataSource:'SINA',
+        }
     }
 
-
     //可以放其他的配置信息
-
 };
 
 

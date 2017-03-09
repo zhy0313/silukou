@@ -113,3 +113,32 @@ export const downStockList = (data) => ({
   type: 'DOWN_STOCK_LIST',
   data
 })
+
+
+
+/**
+ * 在下载设置区域，选择要下载的项目
+ */
+export const willDownItem = (items) => ({
+  type: 'WILLDOWNITEN',
+  items
+})
+
+/**
+ * 在下载设置区域，选择要下载的项目的类型，日线，分钟线等
+ */
+export const willDownItemType = (itemtype) => ({
+  type: 'WILLDOWNITENTYPE',
+  itemtype
+})
+
+/**
+ * 在下载设置区域，选择要下载的项目的时间范围，开始时间，结束时间
+ */
+export const willDownItemRange = (start,finish) => ({
+  type: 'WILLDOWNITENRANGE',
+  start,
+  finish
+})
+
+

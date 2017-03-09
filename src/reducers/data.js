@@ -24,7 +24,10 @@ function data(data = {}, action) {
     currentDataSource: setCurrentDataSource(data.currentDataSource, action),
     dataSourceList: dataSourceList(data.dataSourceList, action),
     stockList: getStockList(data.stockList,action),
-    download: getStockList1(data.download,action)
+    download: getStockList1(data.download,action),
+    willdown:{
+        willdownItem:willdownItem(data,action),
+    }
   }
 }
 
@@ -49,5 +52,14 @@ const getStockList1 = (state, action) => {
     
 }
 
-
+/**
+ * 在下载设置区域，选择要下载的项目，返回下载选择的现在元素的集合，数组格式返回的
+ */
+const willdownItem = (state, action) => {
+    
+    if(action.type == 'WILLDOWNITEN'){
+        return action.items;
+    }
+    
+}
 export default data

@@ -1,9 +1,10 @@
 import React from 'react'
 
-// import TaggedInput from 'react-tagged-input'  //不用这个，好像有问题，还是我自己的问题啦，好吧
-import TreeView from 'treeview-react-bootstrap';
+
+// import TreeView from 'treeview-react-bootstrap';
 
 
+import TreeView from '../components/TreeView'
 import TaggedInput from '../components/TaggedInput'
 //DOWNLOADCENTER
 
@@ -32,7 +33,7 @@ const DownloadCenter = ( {tv} ) => (
                   <div className="col-xs-10 ">
                     
     <TaggedInput
-    autofocus={true}
+    autofocus={false}
     backspaceDeletesWord={true}
     placeholder={'Name some fruits'}
     unique={true}
@@ -51,8 +52,8 @@ const DownloadCenter = ( {tv} ) => (
                 <div className="row">
                   <div className="col-xs-10 ">
                     
-
-{React.createElement(TreeView, {data: data})}
+<TreeView data={tv} />
+{/* //{React.createElement(TreeView, {data: data})} */}
 
                   </div>
                   <div className="col-xs-2">
