@@ -14,124 +14,223 @@ let treeviewSpanIconStyle = treeviewSpanStyle;
 treeviewSpanIconStyle["marginLeft"] = "10px";
 treeviewSpanIconStyle["marginRight"] = "5px";
 
+// 整体树
 class TreeView extends React.Component {
 
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.nodesQuantity = 0;
+        //节点的数量
+        this.nodesQuantity = 1;
 
-    /*this.state = {data: props.data};
-     this.someData = _.clone(props.data);
-     this.setNodeId({nodes: this.state.data});*/
-
-
-    this.state = {data: this.setNodeId(_.clone({nodes: props.data}))};
-
-
-    this.findNodeById = this.findNodeById.bind(this);
-    this.setChildrenState = this.setChildrenState.bind(this);
-    this.setParentSelectable = this.setParentSelectable.bind(this);
-    this.checkParentEmpty = this.checkParentEmpty.bind(this);
-    this.nodeSelected = this.nodeSelected.bind(this);
-    this.nodeDoubleClicked = this.nodeDoubleClicked.bind(this);
-    this.addNode = this.addNode.bind(this);
-    this.removeNode = this.removeNode.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({data: this.setNodeId(_.clone({nodes: nextProps.data}))});
-  }
-
-  setNodeId(node) {
-
-    if (!node.nodes) return;
-
-    return node.nodes.map(childNode => {
-      return {
-        nodeId: this.nodesQuantity++,
-        nodes: this.setNodeId(childNode),
-        parentNode: node,
-        state: {
-          selected: childNode.state ? !!childNode.state.selected : false,
-          expanded: childNode.state ? !!childNode.state.expanded : false
-        },
-        text: childNode.text,
-        icon: childNode.icon
-      }
-    });
-
-  }
-
-  findNodeById(nodes, id) {
-    let _this = this;
-    let result;
-    if (nodes)
-      nodes.forEach(function (node) {
-        if (node.nodeId == id) result = node;
-        else {
-          if (node.nodes) {
-            result = _this.findNodeById(node.nodes, id) || result;
-          }
-        }
-      });
-    return result;
-  }
-
-  deleteById(obj, id) {
-    if (!obj || obj.length <= 0)
-      return [];
-    let arr = [];
-    _.each(obj, (val) => {
-      if (val.nodes && val.nodes.length > 0)
-        val.nodes = this.deleteById(val.nodes, id);
-
-      if (val.nodeId !== id) {
-        arr.push(val);
-      }
-    });
-    return arr;
-  }
-
-  setChildrenState(nodes, state) {
-    let _this = this;
-    if (nodes)
-      nodes.forEach(function (node) {
-        node.state.selected = state;
-        _this.setChildrenState(node.nodes, state);
-      });
-  }
-
-  setParentSelectable(node) {
-    if (!node.parentNode || !node.parentNode.state)
-      return;
-    node.parentNode.state.selected = true;
-    this.setParentSelectable(node.parentNode);
-  }
-
-  checkParentEmpty(node) {
-    let parent = node.parentNode;
-    if (!parent.state || !parent.state.selected)
-      return;
-    if (parent.nodes.every((childNode) => !childNode.state.selected)) {
-      parent.state.selected = false;
-      this.checkParentEmpty(parent);
+        /*this.state = {data: props.data};
+            this.someData = _.clone(props.data);
+            this.setNodeId({nodes: this.state.data});*/
+        this.state = {
+            //_.clone是创建一个参数的影子，就是克隆一个一模一样的东西
+            data: this.setNodeId(_.clone({nodes: props.data}))
+        };
+        this.findNodeById = this.findNodeById.bind(this);
+        this.setChildrenState = this.setChildrenState.bind(this);
+        this.setParentSelectable = this.setParentSelectable.bind(this);
+        this.checkParentEmpty = this.checkParentEmpty.bind(this);
+        this.nodeSelected = this.nodeSelected.bind(this);
+        this.nodeDoubleClicked = this.nodeDoubleClicked.bind(this);
+        this.addNode = this.addNode.bind(this);
+        this.removeNode = this.removeNode.bind(this);
     }
-  }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            data: this.setNodeId(_.clone({nodes: nextProps.data}))
+            //这里除了传入data初始化数据之后，还需要传入该数据被选中的情况
+
+        });
+    }
+
+    /**
+     * 设置节点id
+     * @param {*} node 
+     */
+    // setNodeId(node) {
+    //     if (!node.nodes) return;
+
+    //     //一开始对连续两个return的写法还看不懂，其实啦，它最后还是返回原来的形式，只不过通过对childNode进行再组织了而已
+    //     return node.nodes.map(childNode => {
+    //         return {
+    //         nodeId: this.nodesQuantity++, //节点id
+    //         nodes: this.setNodeId(childNode), //子节点
+    //         parentNode: node,   //父节点
+    //         //选中状态
+    //         state: {    
+    //             selected: childNode.state ? childNode.state.selected : false,
+    //             expanded: childNode.state ? childNode.state.expanded : false
+    //         },
+    //         text: childNode.text, //节点文字
+    //         icon: childNode.icon    //节点图标
+    //         }
+    //     });
+
+    // }
+    setNodeId(node,id=0) {
+        if (!node.nodes) return;
+
+        //一开始对连续两个return的写法还看不懂，其实啦，它最后还是返回原来的形式，只不过通过对childNode进行再组织了而已
+        return node.nodes.map(childNode => {
+            var nid = this.nodesQuantity++;
+            return {
+                nodeId: nid, //节点id
+                nodes: this.setNodeId(childNode,nid), //子节点
+                parentNode: id,   //父节点
+                //选中状态
+                state: {    
+                    selected: childNode.state ? childNode.state.selected : false,
+                    expanded: childNode.state ? childNode.state.expanded : false
+                },
+                text: childNode.text, //节点文字
+                icon: childNode.icon    //节点图标
+            }
+             
+        });
+
+    }
+
+    /**
+     * 查询节点的id
+     * @param {*} nodes 
+     * @param {*} id 
+     */
+    findNodeById(nodes, id) {
+        let _this = this;
+        let result;
+        if (nodes)
+            nodes.forEach(function (node) {
+                if (node.nodeId == id) result = node;
+                else {
+                    if (node.nodes) {
+                    result = _this.findNodeById(node.nodes, id) || result;
+                    }
+                }
+            });
+        return result;
+    }
+
+    /**
+     * 通过id删除节点
+     * @param {*} obj 
+     * @param {*} id 
+     */
+    deleteById(obj, id) {
+        if (!obj || obj.length <= 0)
+            return [];
+        let arr = [];
+        _.each(obj, (val) => {
+            if (val.nodes && val.nodes.length > 0)
+            val.nodes = this.deleteById(val.nodes, id);
+
+            if (val.nodeId !== id) {
+            arr.push(val);
+            }
+        });
+        return arr;
+    }
+
+    /**
+     * 设置子节点的状态
+     * @param {*} nodes 
+     * @param {*} state 
+     */
+    setChildrenState(nodes, state) {
+        let _this = this;
+        if (nodes)
+            //说明一下，forEach与map的区别，都是遍历，一个是没有返回值，一个是重新组织数组，并返回
+            nodes.forEach(function (node) {
+                node.state.selected = state;
+                _this.setChildrenState(node.nodes, state);
+            });
+    }
+
+    /**
+     * 设置父节点的选中状态
+     * @param {*} node 
+     */
+    setParentSelectable(nid,selected) {
+        // var _this = this
+        //父节点没有,直接返回
+        
+        if (nid<1){
+            return
+        }
+        var tree = this.state.data
+        //按照广度优先的原则，遍历整个数
+        var t = function( tree, nid){
+            var arr = []
+            for(var i=0; i<tree.length; i++){
+                if(tree[i].nodes){
+                    for(var j=0; j<tree[i].nodes.length; j++){
+                        if(tree[i].nodes[j].nodeId == nid){
+                            return tree[i].nodeId
+                        }
+                        arr.push(tree[i].nodes[j])
+                    }
+                }
+            }
+            if(arr.length>0){
+                return t( arr,nid )
+            }
+            return 0
+        }
+        var right = t(tree,nid)
+        if(right>0){
+            var node = this.findNodeById(tree, right);
+            //遍历node的子元素，如果子元素都被选中的话，父元素就会被选中
+            if( node.nodes.every((ele)=>{ return ele.state.selected }) ){
+                node.state.selected = selected;
+            }else{
+                node.state.selected = false;
+            }
+            this.setState({data: this.state.data}); //设置本模块的状态
+
+        }
+                //如果父元素还有他自己的父元素呢
+        if( t(tree,right) ){
+            this.setParentSelectable(right,selected)
+        }
+        /**
+         * 发现一个问题，还有，就是只对父元素起效果，对祖父以上元素不起效果
+         */
+
+    }
+
+    checkParentEmpty(node) {
+        let parent = node.parentNode;
+        if (!parent.state || !parent.state.selected)
+            return;
+        if (parent.nodes.every((childNode) =>  { return childNode.state.selected} )) {
+            parent.state.selected = true;
+            this.checkParentEmpty(parent);
+        }else{
+            parent.state.selected = false;
+            this.checkParentEmpty(parent);
+        }
+    }
     
+
     //选择节点
     nodeSelected(nodeId, selected) {
         let node = this.findNodeById(this.state.data, nodeId);
         node.state.selected = selected;
+        var nid = node.nodeId
+// node.parentNode.state.selected = selected
+        // alert(   JSON.stringify(node)  )
+        // alert(   JSON.stringify(this.state)  )
+        // alert(   JSON.stringify( node.nodes )  )
 
-        /*if (!selected)
-            this.setParent(node);*/
-        //this.setParentSelectable(node);
-        /*else
-            this.checkParentEmpty(node);*/
 
-        this.setChildrenState(node.nodes, selected);
-        this.setState({data: this.state.data});
+        this.setChildrenState(node.nodes, selected); //设置子节点的状态  
+        this.setState({data: this.state.data}); //设置本模块的状态
+        //应该还有一个设置父节点的状态
+        this.setParentSelectable(nid,selected)
 
         if (this.props.onClick)
             this.props.onClick(this.state.data, node);
@@ -143,82 +242,91 @@ class TreeView extends React.Component {
         this.props.onDoubleClick(this.state.data, node);
     }
 
-  convert(obj) {
-    if (!obj || obj.length <= 0)
-      return [];
-    return _.map(obj, (val) => {
-      let treeNodeData = {
-        text: val.text,
-        selected: val.state.selected
-      };
-      let children = this.convert(val.nodes);
-      if (children.length > 0)
-        treeNodeData.nodes = children;
-      return treeNodeData;
-    });
-  }
-
-  addNode(nodeId, text) {
-    let node = this.findNodeById(this.state.data, nodeId);
-
-    let newNode = {
-      text: text,
-      state: {},
-      parentNode: node,
-      nodeId: this.nodesQuantity++
-    };
-
-    if (node.nodes) {
-      node.nodes.push(newNode)
-    } else {
-      node.nodes = [newNode]
+    convert(obj) {
+        if (!obj || obj.length <= 0)
+            return [];
+        return _.map(obj, (val) => {
+            let treeNodeData = {
+                text: val.text,
+                selected: val.state.selected
+            };
+            let children = this.convert(val.nodes);
+            if (children.length > 0)
+                treeNodeData.nodes = children;
+            return treeNodeData;
+        });
     }
 
-    console.log(this.convert(this.state.data));
+    /**
+     * 增加节点，这里暂时用不到这些方法
+     * @param {*} nodeId 
+     * @param {*} text 
+     */
+    addNode(nodeId, text) {
+        let node = this.findNodeById(this.state.data, nodeId);
 
-    if (this.props.onNodeAdded)
-      this.props.onNodeAdded(this.state.data);
-  }
+        let newNode = {
+            text: text,
+            state: {},
+            parentNode: node,
+            nodeId: this.nodesQuantity++
+        };
 
-  removeNode(nodeId) {
-    let newData = this.deleteById(_.clone(this.state.data), nodeId);
-    if(newData.length === 0)
-      return false;
-    this.setState({data: newData});
-    if (this.props.onNodeRemoved)
-      this.props.onNodeRemoved(newData);
-  }
+        if (node.nodes) {
+            node.nodes.push(newNode)
+        } else {
+            node.nodes = [newNode]
+        }
 
-  render() {
-    let data = this.state.data;
-    let children = [];
-    if (data) {
-      let _this = this;
-      data.forEach(function (node) {
-        children.push(React.createElement(TreeNode, {
-          node: node,
-          key: node.nodeId,
-          level: 1,
-          visible: true,
-          onSelectedStatusChanged: _this.nodeSelected,
-          onNodeDoubleClicked: _this.nodeDoubleClicked,
-          addNode: _this.addNode,
-          removeNode: _this.removeNode,
-          options: _this.props,
-          nodes: _this.state.data,
-          allowNew: _this.props.allowNew
-        }));
-      });
+        console.log(this.convert(this.state.data));
+
+        if (this.props.onNodeAdded)
+            this.props.onNodeAdded(this.state.data);
+    }
+    /**
+     * 移除节点，暂时用不到此方法
+     * @param {*} nodeId 
+     */
+    removeNode(nodeId) {
+        let newData = this.deleteById(_.clone(this.state.data), nodeId);
+        if(newData.length === 0)
+            return false;
+        this.setState({data: newData});
+        if (this.props.onNodeRemoved)
+            this.props.onNodeRemoved(newData);
     }
 
-    return (
-        <div classID="treeview" className="treeview">
-          <ul className="list-group">
-            {children}
-          </ul>
-        </div>
-    )
-  }
+    render() {
+        let data = this.state.data;
+        let children = [];
+        if (data) {
+            let _this = this;
+            //数据导入,
+            data.forEach(function (node) {
+                children.push(React.createElement(TreeNode, {
+                    node: node,
+                    key: node.nodeId, //键
+                    level: 1, //层级
+                    visible: true,  //是否可见
+                    onSelectedStatusChanged: _this.nodeSelected, //选中状态
+                    onNodeDoubleClicked: _this.nodeDoubleClicked, //双击？
+                    addNode: _this.addNode, //增加节点
+                    removeNode: _this.removeNode, //移除节点
+                    options: _this.props, //选项
+                    nodes: _this.state.data, //子节点的数据
+                    allowNew: _this.props.allowNew // ？
+                }));
+            });
+        }
+
+        return (
+            <div classID="treeview" className="treeview">
+                <ul className="list-group">
+                {children}
+                </ul>
+            </div>
+        )
+    }
 }
 
 TreeView.propTypes = {
@@ -270,6 +378,7 @@ TreeView.defaultProps = {
   nodes: []
 };
 
+//树的节点
 export class TreeNode extends React.Component {
 
   constructor(props) {
@@ -279,7 +388,7 @@ export class TreeNode extends React.Component {
      props.node.state.expanded :
      (this.props.level < this.props.options.levels);*/
     this.selected = (props.node.state && props.node.state.hasOwnProperty('selected')) ?
-        props.node.state.selected :
+        true :
         false;
     this.toggleExpanded = this.toggleExpanded.bind(this);
     this.toggleSelected = this.toggleSelected.bind(this);
@@ -313,7 +422,7 @@ export class TreeNode extends React.Component {
   doubleClicked(event) {
     let selected = !this.props.node.state.selected;
     this.props.onNodeDoubleClicked(this.state.node.nodeId, selected);
-    event.stopPropagation();
+    event.stopPropagation(); //停止传播事件
   }
 
   newNodeForm(event) {
@@ -344,7 +453,8 @@ export class TreeNode extends React.Component {
 
     let style;
 
-    if(this.props.options.selectable) node.icon = (node.state.selected) ? options.selectedIcon : options.unselectedIcon;
+    if(this.props.options.selectable) 
+        node.icon = (node.state.selected) ? options.selectedIcon : options.unselectedIcon;
 
     if (!this.props.visible) {
 
@@ -434,7 +544,7 @@ export class TreeNode extends React.Component {
       let _this = this;
       node.nodes.forEach(function (node) {
         children.push(React.createElement(TreeNode, {
-          node: node,
+          node: node, //props传入的事件
           key: node.nodeId,
           level: _this.props.level + 1,
           visible: _this.state.expanded && _this.props.visible,
@@ -496,3 +606,21 @@ export class TreeNode extends React.Component {
 }
 
 export default TreeView;
+
+
+
+/**
+ * 发现一个问题：一
+ * 子元素全部被选中，父元素应该会被自动选中，这个应该是一个自我的检查过程
+ * 这样提交代码，就只需要提交父元素即可
+ */
+
+/**
+ * 第一个增添的功能就是
+ * 该组件选中了一个节点之后，查看兄弟节点是否全部被选中，如果全部选中，就将其上一级节点也选中，如果父节点的兄弟节点都被全部选中了，则将其祖父节点也选中，依次类推
+ */
+
+/**
+ * 第二个增添的功能
+ * 选中节点之后，发送该节点，如果其父节点也被选中，则发送其福节点，如果父节点的父节点也被选中，就发起祖父节点，以此类推
+ */

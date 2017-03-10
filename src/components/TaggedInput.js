@@ -1,5 +1,4 @@
 'use-strict';
-// var React = require('react');
 import { connect } from 'react-redux'
 import React, { PropTypes } from 'react'
 import { toggleTodo,willDownItem } from '../actions'
@@ -7,21 +6,6 @@ var KEY_CODES = {
   ENTER: 13,
   BACKSPACE: 8
 };
-
-
-// <div class="tagsinput-primary">
-//   <input name="tagsinput" class="tagsinput" value="School, Teacher, Colleague" style="display: none;" /> 数值的隐藏区域
-//   <div class="bootstrap-tagsinput"> 显示区域
-//     <span class="tag label label-info"> 文本标记显示区域
-//       School
-//       <span data-role="remove"></span> 删除符号显示区域
-//     </span> 
-    
-//     <input type="text" placeholder="" style="width: 3em !important;" /> 输入区域
-//   </div>
-// </div>
-
-
 
 var DefaultTagComponent = React.createClass({
   render: function () {
@@ -31,31 +15,10 @@ var DefaultTagComponent = React.createClass({
     // var className = 'bootstrap-tagsinput' + (p.classes ? (' ' + p.classes) : '');
 
     return (
-      // <div className={className}>
-      //   <div className="tag-text" onClick={p.onEdit}>{p.item}</div> {/*文字显示区域*/}
-      //   <div className="remove" onClick={p.onRemove}>  {/*红色的钢叉图案的显示区域*/}
-      //     {p.removeTagLabel}  {/*红色的钢叉图案*/}
-      //   </div>
-      // </div>
-      
         <span className="tag label label-info" onClick={p.onEdit}>
           {p.item}
           <span data-role="remove" onClick={p.onRemove}></span> {/*删除符号显示区域*/}
         </span> 
-        
-    
-
-// <div class="tagsinput-primary">
-//   <input name="tagsinput" class="tagsinput" value="School, Teacher, Colleague" style="display: none;" /> {/*数值的隐藏区域*/}
-  // <div class={className}> {/*显示区域*/}
-  //   <span class="tag label label-info" onClick={p.onEdit}> {/*文本标记显示区域*/}
-  //     {p.item}
-  //     <span data-role="remove" onClick={p.onRemove}></span> {/*删除符号显示区域*/}
-  //   </span> 
-    
-  // </div>
-// </div>
-
     );
   }
 
@@ -174,34 +137,41 @@ var txt = React.createClass({
       </div>
       );
   },
-  //组件更新，组件有变化
-  componentDidMount: function () {
-    // var self = this, s = self.state, p = self.props;
+    //组件更新，组件有变化
+    componentDidMount: function () {
+        //在此方法中设置setState将引起重新渲染 re-render
 
-    // if (p.autofocus) {
-    //   self.refs.input; //获取input的输入数据
-    //   console.log( self.refs.input )
-    // }
-  },
-  //组件更新，组件从prop收到数据
-  componentWillReceiveProps: function (nextProps) {
-    console.log( 'nextProps'+nextProps )
-    dispatch(willDownItem(nextProps.tags))
-    // this.setState({
-    //   // this.props.
-    //   // tags: (nextProps.tags || []).slice(0)
-    // })
-  },
+        // if (p.autofocus) {
+        //   self.refs.input; //获取input的输入数据
+        //   console.log( self.refs.input )
+        // }
+    },
+    //组件更新，组件从prop收到数据
+    componentWillReceiveProps: function (nextProps) {
+        //从其他组件发送action，引起本组件的内容变化
+        var self = this, s = self.state, p = self.props;
+        var txt = nextProps.currentInput
+        // txt = txt.trim();
+        s.tags.push(txt);
+        self.setState({currentInput: txt}, function () {
+            p.onAddTag && p.onAddTag(txt);
+            // callback && callback(true);
+        });
+
+        // this.setState({
+        //   // this.props.tags: (nextProps.tags || []).slice(0)
+        // })
+    },
   //处理移除标记
   _handleRemoveTag: function (index) {
     var self = this, s = self.state, p = self.props;
 
     if (p.onBeforeRemoveTag(index)) {
       var removedItems = s.tags.splice(index, 1);
-
+    //   p.onWillDownItem( s.tags )
       if (s.duplicateIndex) {
         self.setState({duplicateIndex: null}, function () {
-          p.onRemoveTag && p.onRemoveTag(removedItems[0], s.tags);
+          p.onRemoveTag && p.onRemoveTag(removedItems[0], s.tags); //用于显示输出这样的操作
         });
       } else {
         p.onRemoveTag && p.onRemoveTag(removedItems[0], s.tags);
@@ -330,7 +300,7 @@ var txt = React.createClass({
             duplicateIndex: null
           }, function () {
             p.onAddTag && p.onAddTag(tagText, s.tags);
-            p.onWillDownItem( s.tags )
+            // p.onWillDownItem( s.tags )  //本组件目前只负责，删除功能，将删除掉的节点信息发送到store，到时候，可以增加查询，增加功能，不过需要时间，目前不是最为紧急的
             callback && callback(true);
           });
         } else {
@@ -372,14 +342,11 @@ var txt = React.createClass({
 
 });
 
-
-
-
-
 //通过下面这些代码，与系统中的state保有连接
 const mapStateToProps = (state ) => ({
   // items: state.data.willdown.willdownItem
-  items: "只是做一个测试"
+  items: "只是做一个测试",
+  currentInput:state.data.willdown.willdownItem
 })
 
 
@@ -405,3 +372,10 @@ export default TaggedInput
  * 外部通过，props传入函数定义一个dispath来获取变化的state，并发送出来如果你想要的
  * 这样我应该理解的多一点了
  */
+
+// const willDownItem = (items) => ({
+//   type: 'WILLDOWNITEN',
+//   items
+// })
+
+// store.dispatch(willDownItem("这是我想要的，一定就要"))

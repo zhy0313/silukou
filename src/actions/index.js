@@ -123,6 +123,13 @@ export const willDownItem = (items) => ({
   type: 'WILLDOWNITEN',
   items
 })
+/**
+ * 在下载设置区域，选择要删除下载的项目
+ */
+export const willDeleteItem = (items) => ({
+  type: 'WILLDELETEITEN',
+  items
+})
 
 /**
  * 在下载设置区域，选择要下载的项目的类型，日线，分钟线等
