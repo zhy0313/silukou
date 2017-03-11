@@ -120,11 +120,11 @@ const mapStateToProps = (state) => ({
   chartOptions:chartOptions,
 })
 
-const mapDispatchToProps =  ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   onTodoClick: toggleTodo,
-//   onWillDownItem: (items) => {
-//     dispatch(willDownItem(items))
-//   }
+  onWillDownItem: (items) => {
+    dispatch(willDownItem(items))
+  }
 })
 
 

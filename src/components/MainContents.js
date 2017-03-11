@@ -27,7 +27,7 @@ export default class MainContents extends React.Component {
 
         if(this.props.currentUri=='DOWNLOADCENTER'){
         return(
-            <DownloadCenter tv={this.props.tv}  />
+            <DownloadCenter tv={this.props.tv} onWillDownItem={this.props.onWillDownItem} />
         )
         }else if(this.props.currentUri=='CHARTCENTER'){
         return(

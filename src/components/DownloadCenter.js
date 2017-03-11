@@ -4,7 +4,8 @@ import React from 'react'
 // import TreeView from 'treeview-react-bootstrap';
 
 
-import TreeView from '../components/TreeView'
+// import TreeView from '../components/TreeView'
+import TreeViewContainer from '../containers/TreeViewContainer'
 import TaggedInput from '../components/TaggedInput'
 //DOWNLOADCENTER
 
@@ -12,7 +13,7 @@ import TaggedInput from '../components/TaggedInput'
 import DateTimeField from 'react-bootstrap-datetimepicker'
 
 
-const DownloadCenter = ( {tv} ) => (
+const DownloadCenter = ( {tv,onWillDownItem} ) => (
 
 <div id='downloadcenter'>
 
@@ -40,7 +41,7 @@ const DownloadCenter = ( {tv} ) => (
     onBeforeAddTag={function() { return true; }}
     onAddTag={function() { console.log('Tag added', arguments); }}
     onBeforeRemoveTag={function() { return true; }}
-    onRemoveTag={function() { console.log('Tag removed', arguments); }}
+    onRemoveTag={function(tag) { onWillDownItem(tag) }}
     tags={['one', 'two', 'three']}
   />
 
@@ -52,7 +53,7 @@ const DownloadCenter = ( {tv} ) => (
                 <div className="row">
                   <div className="col-xs-10 ">
                     
-<TreeView data={tv} />
+<TreeViewContainer data={tv} />
 {/* //{React.createElement(TreeView, {data: data})} */}
 
                   </div>

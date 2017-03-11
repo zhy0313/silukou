@@ -24,9 +24,9 @@ var DefaultTagComponent = React.createClass({
 
 });
 
-var txt = React.createClass({
-// module.exports = React.createClass({
-  // displayName: 'TaggedInput',
+// var txt = React.createClass({
+module.exports = React.createClass({
+  displayName: 'TaggedInput',
   //类型检查
   propTypes: {
     onBeforeAddTag: React.PropTypes.func,
@@ -171,10 +171,12 @@ var txt = React.createClass({
     //   p.onWillDownItem( s.tags )
       if (s.duplicateIndex) {
         self.setState({duplicateIndex: null}, function () {
-          p.onRemoveTag && p.onRemoveTag(removedItems[0], s.tags); //用于显示输出这样的操作
+          // p.onRemoveTag && p.onRemoveTag(removedItems[0], s.tags); //用于显示输出这样的操作
+        p.onRemoveTag && p.onRemoveTag( s.tags);
         });
       } else {
-        p.onRemoveTag && p.onRemoveTag(removedItems[0], s.tags);
+        // p.onRemoveTag && p.onRemoveTag(removedItems[0], s.tags);
+        p.onRemoveTag && p.onRemoveTag( s.tags);
         self.forceUpdate();
       }
     }
@@ -342,27 +344,27 @@ var txt = React.createClass({
 
 });
 
-//通过下面这些代码，与系统中的state保有连接
-const mapStateToProps = (state ) => ({
-  // items: state.data.willdown.willdownItem
-  items: "只是做一个测试",
-  currentInput:state.data.willdown.willdownItem
-})
+// //通过下面这些代码，与系统中的state保有连接
+// const mapStateToProps = (state ) => ({
+//   // items: state.data.willdown.willdownItem
+//   items: "只是做一个测试",
+//   currentInput:state.data.willdown.willdownItem
+// })
 
 
 
-const mapDispatchToProps = (dispatch) => ({
-  onWillDownItem: (items) => {
-    dispatch(willDownItem(items))
-  }
-})
+// const mapDispatchToProps = (dispatch) => ({
+//   onWillDownItem: (items) => {
+//     dispatch(willDownItem(items))
+//   }
+// })
 
-const TaggedInput = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(txt)
+// const TaggedInput = connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(txt)
 
-export default TaggedInput
+// export default TaggedInput
 
 
 /**

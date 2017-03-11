@@ -70,3 +70,60 @@ console.log(t)
         //     // return arr
         //     return false
         // }
+
+
+
+var arr = [{
+    "nodeId": 1,
+    "nodes": [{
+        "nodeId": 2,
+        "nodes": [{
+            "nodeId": 3,
+            "parentNode": 2,
+            "state": {
+                "selected": true,
+                "expanded": false
+            },
+            "text": "Grandchild 1"
+        },
+        {
+            "nodeId": 4,
+            "parentNode": 2,
+            "state": {
+                "selected": false,
+                "expanded": false
+            },
+            "text": "Grandchild 2"
+        }],
+        "parentNode": 1,
+        "state": {
+            "selected": false,
+            "expanded": false
+        },
+        "text": "Child 1"
+    },
+    {
+        "nodeId": 5,
+        "parentNode": 1,
+        "state": {
+            "selected": false,
+            "expanded": false
+        },
+        "text": "Child 2"
+    }],
+    "parentNode": 0,
+    "state": {
+        "selected": false,
+        "expanded": false
+    },
+    "text": "Paresdfsdnt 1"
+},
+{
+    "nodeId": 6,
+    "parentNode": 0,
+    "state": {
+        "selected": false,
+        "expanded": false
+    },
+    "text": "Parent 2"
+}]

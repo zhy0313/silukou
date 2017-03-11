@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash';
+import { connect } from 'react-redux'
 
 let treeviewSpanStyle = {
   "width": "1rem",
@@ -159,7 +160,7 @@ class TreeView extends React.Component {
         //父节点没有,直接返回
         
         if (nid<1){
-            return
+            return false
         }
         var tree = this.state.data
         //按照广度优先的原则，遍历整个数
@@ -181,24 +182,30 @@ class TreeView extends React.Component {
             return 0
         }
         var right = t(tree,nid)
+        var fatherNd = {}
         if(right>0){
             var node = this.findNodeById(tree, right);
             //遍历node的子元素，如果子元素都被选中的话，父元素就会被选中
             if( node.nodes.every((ele)=>{ return ele.state.selected }) ){
+                fatherNd = node
                 node.state.selected = selected;
             }else{
                 node.state.selected = false;
             }
             this.setState({data: this.state.data}); //设置本模块的状态
 
+        }else{
+            //right不大于0的话，父元素只能是为0，为0 意味着本身就是顶级元素，没有父元素
+            return false
         }
                 //如果父元素还有他自己的父元素呢
         if( t(tree,right) ){
             this.setParentSelectable(right,selected)
+        }else{
+            //已经是没有父元素了
+            //返回本身的状态
+            return fatherNd
         }
-        /**
-         * 发现一个问题，还有，就是只对父元素起效果，对祖父以上元素不起效果
-         */
 
     }
 
@@ -218,6 +225,7 @@ class TreeView extends React.Component {
 
     //选择节点
     nodeSelected(nodeId, selected) {
+        var self = this, s = self.state, p = self.props;
         let node = this.findNodeById(this.state.data, nodeId);
         node.state.selected = selected;
         var nid = node.nodeId
@@ -230,8 +238,18 @@ class TreeView extends React.Component {
         this.setChildrenState(node.nodes, selected); //设置子节点的状态  
         this.setState({data: this.state.data}); //设置本模块的状态
         //应该还有一个设置父节点的状态
-        this.setParentSelectable(nid,selected)
-
+        var fatherNd = this.setParentSelectable(nid,selected)
+        // if(fatherNd){
+        //     //有祖父节点，发送祖父节点
+        //     fatherNd.nodes = []
+        //     p.onWillDownItem( fatherNd.text )
+        //     // this.props.onWillDownItem(fatherNd)
+        //     this.props.dispatch(willDownItem(fatherNd))
+        // }else{
+        //     //没有father,就发送本身的节点
+        //     // this.props.onWillDownItem(node)
+        //     p.onWillDownItem( node.text )
+        // }
         if (this.props.onClick)
             this.props.onClick(this.state.data, node);
     }
@@ -239,7 +257,7 @@ class TreeView extends React.Component {
     nodeDoubleClicked(nodeId, selected) {
         let node = this.findNodeById(this.state.data, nodeId);
         if (this.props.onDoubleClick)
-        this.props.onDoubleClick(this.state.data, node);
+            this.props.onDoubleClick(this.state.data, node);
     }
 
     convert(obj) {
@@ -606,7 +624,6 @@ export class TreeNode extends React.Component {
 }
 
 export default TreeView;
-
 
 
 /**
