@@ -9,9 +9,9 @@ app.on('ready', () => {
     if(mainWindow) return;
 
     let options = {
-      width:         800,
+      width:         1000,
       height:        600,
-      'min-width':   600,
+      'min-width':   800,
       'min-height':   800,
     };
     if (process.platform === 'darwin') {

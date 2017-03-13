@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { toggleTodo,willDownItem } from '../actions'
+import { toggleTodo,willDownItem,willDownItemType,startTime,endTime } from '../actions'
+// import { * } from '../actions'
 import MainContents from '../components/MainContents'
 
 //返回当前页面的url
@@ -13,29 +14,55 @@ const getMainContentsUri = (state) => {
         }
     }
 }
+//位于下载区域的选中数据
 var data = [
-  {
-    text: "Paresdfsdnt 1",
-    nodes: [
-      {
-        text: "Child 1",
-        nodes: [
-          {
-            text: "Grandchild 1"
-          },
-          {
-            text: "Grandchild 2"
-          }
-        ]
-      },
-      {
-        text: "Child 2"
-      }
-    ]
-  },
-  {
-    text: "Parent 2"
-  }
+    {
+        text: "股票",
+        code: "STOCK",
+        param:"",
+        nodes: 
+            [{
+                text: "A股",
+                code: "ASTOCK",
+                param:"",
+                nodes: 
+                    [{
+                        text: "创业板",
+                        code: "CYB",
+                        param:"",
+                    },{
+                        text: "中小板块",
+                        code: "ZXBK",
+                        param:"",
+                    }]
+            },{
+                text: "港股",
+                code: "GSTOCK",
+                param:"",
+            },{
+                text: "美股",
+                code: "MSTOCK",
+                param:"",
+            }]
+    },{
+        text: "基金",
+        code: 'FUND',
+        param:"",
+        nodes: 
+            [{
+                text: "国内期货",
+                code:"",
+                param:"",
+            },{
+                text: "外盘期货",
+                code: "",
+                param:"",
+            }]
+    },{
+        text: "期货",
+        code: 'FUTURES',
+        param:"",
+    }
 ];
 
 var chartColors = {
@@ -112,18 +139,69 @@ var chartOptions = {
         intersect: true
     }
 }
+var tags = [
+  ['text', 'code',  'someth1ing else'],
+  ['text', 'code',  'somet2hing else'],
+  ['text', 'code',  'someth3ing else'],
+]
+
+
+//位于下载区域的选中数据
+var datatype = [
+    {
+        text: "日线",
+        code: 'DAILY',
+        param:"",
+    },{
+        text: "分钟线",
+        code: 'MINIS',
+        param:"",
+    }
+];
+
 
 const mapStateToProps = (state) => ({
   currentUri: getMainContentsUri(state ),
   tv:data,
   chartData:chartData,
   chartOptions:chartOptions,
+  tags:tags,
+//   currentInput:state.data.willdown.willdownItem,
+//   dcs:{
+//       willdownitemtype: state.data.willdown.willdownitemtype,
+//       datatype: datatype,
+//   }
+  currentInput:state.data.willdownItem,
+  dcs:{
+      willdownitemtype: state.data.willdownitemtype,
+      datatype: datatype,
+  }
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onTodoClick: toggleTodo,
-  onWillDownItem: (items) => {
-    dispatch(willDownItem(items))
+    onwillDownItemType: willDownItemType,
+    onWillDownItem: willDownItem,
+    starttime: (time) => {   //下载内容的开始时间
+        dispatch(startTime(time)) 
+    },
+    endtime: (time) => {     //结束时间
+        dispatch(endTime(time))
+    },
+  //下载区域的事件处理
+  dcd:{
+    onwillDownItemType:(itemtype) => {
+        dispatch(willDownItemType(itemtype))
+    },  
+    onWillDownItem: (items) => {
+        dispatch(willDownItem(items))
+    },
+    // starttime:(time) => {   //下载内容的开始时间
+    //     dispatch(startTime(time)) 
+    // },
+    // endtime:(time) => {     //结束时间
+    //     dispatch(endTime(time))
+    // }
   }
 })
 

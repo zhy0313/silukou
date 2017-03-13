@@ -34,7 +34,6 @@ class TreeView extends React.Component {
         this.findNodeById = this.findNodeById.bind(this);
         this.setChildrenState = this.setChildrenState.bind(this);
         this.setParentSelectable = this.setParentSelectable.bind(this);
-        this.checkParentEmpty = this.checkParentEmpty.bind(this);
         this.nodeSelected = this.nodeSelected.bind(this);
         this.nodeDoubleClicked = this.nodeDoubleClicked.bind(this);
         this.addNode = this.addNode.bind(this);
@@ -42,11 +41,22 @@ class TreeView extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            data: this.setNodeId(_.clone({nodes: nextProps.data}))
-            //这里除了传入data初始化数据之后，还需要传入该数据被选中的情况
+        // alert( "TreeView显示:"+ JSON.stringify( 'nextProps.currentInput') )
+        // var tree = this.state.data
+        // var tags = nextProps.currentInput
+        
+        // this.checkRecive(tree,tags)
+        // alert( JSON.stringify( tree) )
+        //这里要写入接受数据，从外部主要是tagedinput的数据
+        // this.setState({
+        //     data: this.setNodeId(_.clone({nodes: nextProps.data}))
+        //     //这里除了传入data初始化数据之后，还需要传入该数据被选中的情况
 
-        });
+        // });
+        // this.setState({data: this.state.data});
+        // this.setState({data: tree.currentInput})
+    }
+    componentDidUpdate(prevProps, prevState){
     }
 
     /**
@@ -89,6 +99,8 @@ class TreeView extends React.Component {
                     expanded: childNode.state ? childNode.state.expanded : false
                 },
                 text: childNode.text, //节点文字
+                code: childNode.code, //节点的code
+                param: childNode.param, //节点的参数
                 icon: childNode.icon    //节点图标
             }
              
@@ -209,19 +221,62 @@ class TreeView extends React.Component {
 
     }
 
-    checkParentEmpty(node) {
-        let parent = node.parentNode;
-        if (!parent.state || !parent.state.selected)
-            return;
-        if (parent.nodes.every((childNode) =>  { return childNode.state.selected} )) {
-            parent.state.selected = true;
-            this.checkParentEmpty(parent);
-        }else{
-            parent.state.selected = false;
-            this.checkParentEmpty(parent);
+    //接受信息检查
+    checkRecive(tree,tags){
+        var arr = []
+        var self = this, s = self.state, p = self.props;
+        for(var i=0; i<tree.length; i++){
+            var node = this.findNodeById(s.data, tree[i].nodeId);
+            var selected = node.selected
+            //遍历传过来的tags
+            for(var j=0; j<tags.length; j++){
+                //如果该节点，有在这个数组内，则设置为true
+                if(tree[i].nodeId == tags[j][0]){
+                    //之前选中的，现在没有选中的情况
+                    if(!selected){
+                        selected = !selected
+                        this.setChildrenState(node.nodes, selected); //设置子节点的状态  
+                        this.setState({data: this.state.data}); //设置本模块的状态
+                    }
+                    //之前选中，现在也没有删除，直接跳过
+                }
+            }
+            if(tree[i].nodes){
+                for(var j=0; j<tree[i].nodes.length; j++){
+                    arr.push(tree[i].nodes[j])
+                }
+            }
+        }
+        if(arr.length>0){
+            this.checkRecive(arr, tags)
         }
     }
-    
+    //检查是否被
+    checkSelected(tree, tags=[]){
+        
+        var arr = [] //用于临时广度优先的数据
+        for(var i=0; i<tree.length; i++){
+            if(tree[i].state.selected){
+                //父节点被选中，则子节点全部都被选中，子节点就不需要再被检查了
+                var temp = [tree[i].nodeId, tree[i].text, tree[i].code,tree[i].param,]
+                tags.push(temp) //加入到数组当中去
+            }else{
+                //如果父节点没有被选中，就要检查子节点了
+                //当然了，前提是子节点需要存在
+                if(tree[i].nodes){
+                    for(var j=0; j<tree[i].nodes.length; j++){
+                        arr.push(tree[i].nodes[j])
+                    }
+                }
+            }
+        }
+        // alert( JSON.stringify( arr ) )
+        if(arr.length>0){
+            return this.checkSelected(arr, tags)
+        }
+        return tags
+
+    }
 
     //选择节点
     nodeSelected(nodeId, selected) {
@@ -231,25 +286,22 @@ class TreeView extends React.Component {
         var nid = node.nodeId
 // node.parentNode.state.selected = selected
         // alert(   JSON.stringify(node)  )
-        // alert(   JSON.stringify(this.state)  )
-        // alert(   JSON.stringify( node.nodes )  )
-
+        // alert(   JSON.stringify(this.state.data)  )
+        
 
         this.setChildrenState(node.nodes, selected); //设置子节点的状态  
         this.setState({data: this.state.data}); //设置本模块的状态
         //应该还有一个设置父节点的状态
         var fatherNd = this.setParentSelectable(nid,selected)
-        // if(fatherNd){
-        //     //有祖父节点，发送祖父节点
-        //     fatherNd.nodes = []
-        //     p.onWillDownItem( fatherNd.text )
-        //     // this.props.onWillDownItem(fatherNd)
-        //     this.props.dispatch(willDownItem(fatherNd))
-        // }else{
-        //     //没有father,就发送本身的节点
-        //     // this.props.onWillDownItem(node)
-        //     p.onWillDownItem( node.text )
-        // }
+
+        //节点好后，需要遍历s 检索，状态树木中，所有被选中的，然后将选中的，插入数组中去，最后，把这些信息发送出去
+        //发送要做的内容
+        //发送过去是一个数组格式的东西，包含了选中的顶级
+        //通过广度优先来查找
+        //进度优先，遇到这个难点，先跳过去把
+         var info = this.checkSelected( this.state.data) 
+         p.onWillDownItem(info)
+
         if (this.props.onClick)
             this.props.onClick(this.state.data, node);
     }
@@ -417,6 +469,7 @@ export class TreeNode extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+      
     this.setState({node: nextProps.node, expanded: true});
     /*this.expanded = (nextProps.node.state && nextProps.node.state.hasOwnProperty('expanded')) ?
      nextProps.node.state.expanded :

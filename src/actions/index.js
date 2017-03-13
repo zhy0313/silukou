@@ -126,26 +126,26 @@ export const willDownItem = (items) => ({
 /**
  * 在下载设置区域，选择要删除下载的项目
  */
-export const willDeleteItem = (items) => ({
-  type: 'WILLDELETEITEN',
-  items
-})
-
-/**
- * 在下载设置区域，选择要下载的项目的类型，日线，分钟线等
- */
 export const willDownItemType = (itemtype) => ({
   type: 'WILLDOWNITENTYPE',
   itemtype
 })
 
 /**
+ * 在下载设置区域，选择要下载的项目的类型，日线，分钟线等
+ */
+export const startTime = (time) => ({
+  type: 'STARTTIME',
+  time
+})
+
+/**
  * 在下载设置区域，选择要下载的项目的时间范围，开始时间，结束时间
  */
-export const willDownItemRange = (start,finish) => ({
-  type: 'WILLDOWNITENRANGE',
-  start,
-  finish
+export const endTime = (time) => ({
+  type: 'EDNTIME',
+  time,
 })
+
 
 

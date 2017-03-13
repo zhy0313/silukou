@@ -1,139 +1,3 @@
-// {
-//     [
-//     {
-//         "nodeId": 1,
-//         "nodes": [
-//         {
-//             "nodeId": 2,
-//             "nodes": [
-//             {
-//                 "nodeId": 3,
-//             },
-//             {
-//                 "nodeId": 4,
-//             }],
-//         },
-//         {
-//             "nodeId": 5,
-//         }]
-//     },
-//     {
-//         "nodeId": 6,
-//     }
-//     ]
-// }
-'use strict'
-var arr = [{"nodeId":1,"nodes":[{"nodeId":2,"nodes":[{"nodeId":3,"parentNode":2,"state":{"selected":true,"expanded":false},"text":"Grandchild 1"},{"nodeId":4,"parentNode":2,"state":{"selected":false,"expanded":false},"text":"Grandchild 2"}],"parentNode":1,"state":{"selected":false,"expanded":false},"text":"Child 1"},{"nodeId":5,"parentNode":1,"state":{"selected":false,"expanded":false},"text":"Child 2"}],"parentNode":0,"state":{"selected":false,"expanded":false},"text":"Paresdfsdnt 1"},{"nodeId":6,"parentNode":0,"state":{"selected":false,"expanded":false},"text":"Parent 2"}]
-
-        //寻找父元素
-        function t( tree, nid){
-            var arr = []
-            for(var i=0; i<tree.length; i++){
-                if(tree[i].nodes){
-                    for(var j=0; j<tree[i].nodes.length; j++){
-                        if(tree[i].nodes[j].nodeId == nid){
-                            return tree[i].nodeId
-                        }
-                        arr.push(tree[i].nodes[j])
-                    }
-                }
-            }
-            if(arr.length>0){
-                return t( arr,nid )
-            }
-            // return arr
-            return 0
-        }
-
-var t = t(arr,11)
-console.log(t)
-
-
-
-
-//寻找本元素
-// function t( tree, nid){
-//     var arr = []
-//     for(var i=0; i<tree.length; i++){
-//         if(tree[i].nodeId == nid){
-//             return tree[i].nodeId
-//         }
-//         if(tree[i].nodes){
-//             for(var j=0; j<tree[i].nodes.length; j++){
-//                 arr.push(tree[i].nodes[j])
-//             }
-//         }
-//     }
-//     if(arr.length>0){
-//         return t( arr,nid )
-//     }
-//     // return arr
-//     return false
-// }
-
-
-
-var arr = [{
-    "nodeId": 1,
-    "nodes": [{
-        "nodeId": 2,
-        "nodes": [{
-            "nodeId": 3,
-            "parentNode": 2,
-            "state": {
-                "selected": true,
-                "expanded": false
-            },
-            "text": "Grandchild 1"
-        },
-        {
-            "nodeId": 4,
-            "parentNode": 2,
-            "state": {
-                "selected": false,
-                "expanded": false
-            },
-            "text": "Grandchild 2"
-        }],
-        "parentNode": 1,
-        "state": {
-            "selected": false,
-            "expanded": false
-        },
-        "text": "Child 1"
-    },
-    {
-        "nodeId": 5,
-        "parentNode": 1,
-        "state": {
-            "selected": false,
-            "expanded": false
-        },
-        "text": "Child 2"
-    }],
-    "parentNode": 0,
-    "state": {
-        "selected": false,
-        "expanded": false
-    },
-    "text": "Paresdfsdnt 1"
-},
-{
-    "nodeId": 6,
-    "parentNode": 0,
-    "state": {
-        "selected": false,
-        "expanded": false
-    },
-    "text": "Parent 2"
-}]
-
-
-
-
-
-
-
 'use-strict';
 import { connect } from 'react-redux'
 import React, { PropTypes } from 'react'
@@ -205,9 +69,7 @@ module.exports = React.createClass({
   //初始化状态state
   getInitialState: function () {
     return {
-      //按要求，tags是一个对象数组，数组元素必须是对象，而不是单单一个文本
       tags: (this.props.tags || []).slice(0),
-      
       currentInput: null
     };
   },
@@ -224,7 +86,7 @@ module.exports = React.createClass({
     if (p.classes) {
       classes += ' ' + p.classes;
     }
-    //s.tags 应该是一个对象，对象当中可以放文本，等其他一些东西
+
     if (s.tags.length === 0) {
       placeholder = p.placeholder;
     }
@@ -288,16 +150,13 @@ module.exports = React.createClass({
     componentWillReceiveProps: function (nextProps) {
         //从其他组件发送action，引起本组件的内容变化
         var self = this, s = self.state, p = self.props;
-        var txt = nextProps.currentInput //这里其实是对象数组
+        var txt = nextProps.currentInput
         // txt = txt.trim();
-        // s.tags.push(txt); 
-        //整个tags一起推送过来的
-        s.tags = txt //这样写就重新更新了tags
-        //当前输入的功能将会被删除的掉，因为现在暂时用不到，数据直接送treeview那边组件传送过来的
-        // self.setState({currentInput: txt}, function () {
-        //     p.onAddTag && p.onAddTag(txt);
-        //     // callback && callback(true);
-        // });
+        s.tags.push(txt);
+        self.setState({currentInput: txt}, function () {
+            p.onAddTag && p.onAddTag(txt);
+            // callback && callback(true);
+        });
 
         // this.setState({
         //   // this.props.tags: (nextProps.tags || []).slice(0)
@@ -326,7 +185,7 @@ module.exports = React.createClass({
   _handleEditTag: function (index) {
     var self = this, s = self.state, p = self.props;
     var removedItems;
-//整个函数要停止使用
+
     if (s.currentInput) {
       var trimmedInput = s.currentInput.trim();
       if (trimmedInput && (this.state.tags.indexOf(trimmedInput) < 0 || !p.unique)) {
@@ -420,11 +279,11 @@ module.exports = React.createClass({
     var self = this, s = self.state, p = self.props;
     var duplicateIndex;
     var trimmedText;
-    
+
     if (tagText && tagText.length > 0) {
       trimmedText = tagText.trim();
-      if (p.unique) { //p.unique 是用来做，是否判断输入值的唯一性 这个检查
-//这里要更改
+      if (p.unique) {
+
         // not a boolean, it's a function
         if (typeof p.unique === 'function') {
           duplicateIndex = p.unique(this.state.tags, trimmedText);
@@ -436,8 +295,8 @@ module.exports = React.createClass({
           if (!p.onBeforeAddTag(trimmedText)) {
             return;
           }
-          var obj = {text:trimmedText,code:trimmedText}
-          s.tags.push(obj);
+
+          s.tags.push(trimmedText);
           self.setState({
             currentInput: '',
             duplicateIndex: null
@@ -485,6 +344,27 @@ module.exports = React.createClass({
 
 });
 
+// //通过下面这些代码，与系统中的state保有连接
+// const mapStateToProps = (state ) => ({
+//   // items: state.data.willdown.willdownItem
+//   items: "只是做一个测试",
+//   currentInput:state.data.willdown.willdownItem
+// })
+
+
+
+// const mapDispatchToProps = (dispatch) => ({
+//   onWillDownItem: (items) => {
+//     dispatch(willDownItem(items))
+//   }
+// })
+
+// const TaggedInput = connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(txt)
+
+// export default TaggedInput
 
 
 /**
@@ -495,4 +375,9 @@ module.exports = React.createClass({
  * 这样我应该理解的多一点了
  */
 
+// const willDownItem = (items) => ({
+//   type: 'WILLDOWNITEN',
+//   items
+// })
 
+// store.dispatch(willDownItem("这是我想要的，一定就要"))

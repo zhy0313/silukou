@@ -4,8 +4,7 @@ import React from 'react'
 // import TreeView from 'treeview-react-bootstrap';
 
 
-// import TreeView from '../components/TreeView'
-import TreeViewContainer from '../containers/TreeViewContainer'
+import TreeView from '../components/TreeView'
 import TaggedInput from '../components/TaggedInput'
 //DOWNLOADCENTER
 
@@ -13,9 +12,9 @@ import TaggedInput from '../components/TaggedInput'
 import DateTimeField from 'react-bootstrap-datetimepicker'
 
 
-const DownloadCenter = ( {tv,onWillDownItem} ) => (
+const DownloadCenter = ( {tv, tags,currentInput, dcd, dcs, starttime, endtime } ) => (
 
-<div id='downloadcenter'>
+<div >
 
 
           <div className="panel panel-default">
@@ -41,25 +40,23 @@ const DownloadCenter = ( {tv,onWillDownItem} ) => (
     onBeforeAddTag={function() { return true; }}
     onAddTag={function() { console.log('Tag added', arguments); }}
     onBeforeRemoveTag={function() { return true; }}
-    onRemoveTag={function(tag) { onWillDownItem(tag) }}
-    tags={['one', 'two', 'three']}
+    // onRemoveTag={function(tag) { onWillDownItem(tag) }}
+    // tags={['one', 'two', 'three']}
+    tags={tags}
+    currentInput={currentInput}
+    
   />
 
 
                   </div>
                 </div>
               </li>
-              <li className="list-group-item"  id="collapseExample1">
+              <li className="list-group-item" >
                 <div className="row">
-                  <div className="col-xs-10 ">
                     
-<TreeViewContainer data={tv} />
+<TreeView data={tv}  onWillDownItem={dcd.onWillDownItem} />
 {/* //{React.createElement(TreeView, {data: data})} */}
 
-                  </div>
-                  <div className="col-xs-2">
-                    <button className="btn btn-primary" >开始</button>
-                  </div>
                 </div>
               </li>
               <li className="list-group-item">
@@ -68,68 +65,43 @@ const DownloadCenter = ( {tv,onWillDownItem} ) => (
                   <div className="col-xs-10 ">
                     
                     <div className="tagsinput-primary">
-                      <input name="tagsinput" className="tagsinput" data-role="tagsinput" defaultValue="School, Teacher, Colleague" />
+                      
+    <TaggedInput
+    unique={true}
+    tags={tags}
+    currentInput={dcs.willdownitemtype}
+    
+  />
+
                     </div>
                   </div>
                 </div>
               </li>
-              <li className="list-group-item" id="data_type_choice">
+              <li className="list-group-item" >
                 <div className="row">
-                  <div className="col-xs-2"></div>
-                  <div className="col-xs-10 ">
                     
                     <ul className="list-group list-inline">
-                      <li>
-                        <label className="checkbox" htmlFor="checkbox1">
-                          <input type="checkbox" defaultValue="" id="checkbox1" data-toggle="checkbox" className="custom-checkbox" />
-                          <span className="icons">
-                            <span className="icon-unchecked"></span>
-                            <span className="icon-checked"></span>
-                          </span>
-                          Checkbox
-                        </label>
-                      </li>
-                      <li>
-                        <label className="checkbox" htmlFor="checkbox2">
-                        <input type="checkbox" defaultValue="" id="checkbox2" data-toggle="checkbox" className="custom-checkbox" />
-                          <span className="icons">
-                            <span className="icon-unchecked"></span>
-                            <span className="icon-checked"></span>
-                          </span>
-                          Checkbox
-                        </label>
-                      </li>
-                      <li>
-                        <label className="checkbox" htmlFor="checkbox3">
-                          <input type="checkbox" defaultValue="" id="checkbox3" data-toggle="checkbox" className="custom-checkbox" />
-                          <span className="icons">
-                            <span className="icon-unchecked"></span>
-                            <span className="icon-checked"></span>
-                          </span>
-                          Checkbox
-                        </label>
-                      </li>
-                      <li>
-                        <label className="checkbox" htmlFor="checkbox4">
-                          <input type="checkbox" defaultValue="" id="checkbox4" data-toggle="checkbox" className="custom-checkbox" />
-                          <span className="icons">
-                            <span className="icon-unchecked"></span>
-                            <span className="icon-checked"></span>
-                          </span>
-                          Checkbox
-                        </label>
-                      </li>
+
+<TreeView data={dcs.datatype}  onWillDownItem={dcd.onwillDownItemType} />
+                      
                     </ul>
+                </div>
+              </li>
+              <li className="list-group-item">
+                <div className="row">
+                  <div className="col-xs-2 text-center">时间范围</div>
+                  <div className="col-xs-10 ">
+                    <DateTimeField  defaultText="开始日期"  onChange={starttime} />
+                    <DateTimeField  defaultText="结束日期"  onChange={endtime} />
+                    
                   </div>
                 </div>
               </li>
               <li className="list-group-item">
                 <div className="row">
-                  <div className="col-xs-2 text-center">时间区间</div>
-                  <div className="col-xs-10 ">
-                    <DateTimeField />
-                    <DateTimeField />
-                    
+                  <div className="col-xs-10 ">  </div>
+                  <div className="col-xs-2 text-center">
+                    <button type="button" class="btn btn-success">时间区间</button>
                   </div>
                 </div>
               </li>
