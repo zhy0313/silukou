@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { toggleTodo,willDownItem,willDownItemType,startTime,endTime } from '../actions'
+import { toggleTodo,willDownItem,willDownItemType,startTime,endTime , setdownloadui } from '../actions'
 // import { * } from '../actions'
 import MainContents from '../components/MainContents'
 
@@ -175,6 +175,9 @@ const mapStateToProps = (state) => ({
   dcs:{
       willdownitemtype: state.data.willdownitemtype,
       datatype: datatype,
+      setdownloadui: state.data.setdownloadui,
+      starttime: state.data.starttime,
+      endtime: state.data.endtime,
   }
 })
 
@@ -182,12 +185,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onTodoClick: toggleTodo,
     onwillDownItemType: willDownItemType,
     onWillDownItem: willDownItem,
-    starttime: (time) => {   //下载内容的开始时间
-        dispatch(startTime(time)) 
-    },
-    endtime: (time) => {     //结束时间
-        dispatch(endTime(time))
-    },
+    // starttime: (time) => {   //下载内容的开始时间
+    //     dispatch(startTime(time)) 
+    // },
+    // endtime: (time) => {     //结束时间
+    //     dispatch(endTime(time))
+    // },
   //下载区域的事件处理
   dcd:{
     onwillDownItemType:(itemtype) => {
@@ -196,12 +199,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     onWillDownItem: (items) => {
         dispatch(willDownItem(items))
     },
-    // starttime:(time) => {   //下载内容的开始时间
-    //     dispatch(startTime(time)) 
-    // },
-    // endtime:(time) => {     //结束时间
-    //     dispatch(endTime(time))
-    // }
+    starttime:(time) => {   //下载内容的开始时间
+        dispatch(startTime(time)) 
+    },
+    endtime:(time) => {     //结束时间
+        dispatch(endTime(time))
+    },
+    setdownloadui:() => {
+        dispatch(setdownloadui())
+    }
   }
 })
 

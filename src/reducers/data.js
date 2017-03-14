@@ -20,26 +20,26 @@ const dataSourceList = (dataSourceList, action) => {
 }
 
 function data(data = {}, action) {
-  return {
-    currentDataSource: setCurrentDataSource(data.currentDataSource, action),
-    dataSourceList: dataSourceList(data.dataSourceList, action),
-    stockList: getStockList(data.stockList,action),
-    download: getStockList1(data.download,action),
-    // willdown: willdown(data.willdown,action),
-    // willdown: return {  //错误的写法
-        // willdownItem:willdownItem(data.willdown.willdownItem,action),
-        // willdownitemtype:willDownItemType(data.willdown.willdownitemtype,action),
-        // setdownloadui: setdownloadui(data.willdown.setdownloadui,action), //默认情况下，软件开始后是没有设置的
-        // starttime: starttime(data.willdown.starttime,action), //开始时间
-        // endtime: endtime(data.willdown.endtime,action), //结束时间
-    // }
+    return {
+        currentDataSource: setCurrentDataSource(data.currentDataSource, action),
+        dataSourceList: dataSourceList(data.dataSourceList, action),
+        stockList: getStockList(data.stockList,action),
+        download: getStockList1(data.download,action),
+        // willdown: willdown(data.willdown,action),
+        // willdown: return {  //错误的写法
+            // willdownItem:willdownItem(data.willdown.willdownItem,action),
+            // willdownitemtype:willDownItemType(data.willdown.willdownitemtype,action),
+            // setdownloadui: setdownloadui(data.willdown.setdownloadui,action), //默认情况下，软件开始后是没有设置的
+            // starttime: starttime(data.willdown.starttime,action), //开始时间
+            // endtime: endtime(data.willdown.endtime,action), //结束时间
+        // }
         willdownItem:willdownItem(data.willdownItem,action),
         willdownitemtype:willDownItemType(data.willdownitemtype,action),
-        setdownloadui: setdownloadui(data.setdownloadui,action), //默认情况下，软件开始后是没有设置的
+        setdownloadui: setdownloadui(data,action), //默认情况下，软件开始后是没有设置的
         starttime: starttime(data.starttime,action), //开始时间
         endtime: endtime(data.endtime,action), //结束时间
 
-  }
+    }
 }
 
 // const willdown = (willdown, action) => {
@@ -92,10 +92,16 @@ const willDownItemType = (state, action) => {
 //设置下载，关于下载设置界面的变化
 const setdownloadui = (state, action) => {
     if(action.type == 'SETDOWNLOADUI'){
-        return "OPEN";
-    }else{
-        return "CLOSE";
+        if(state.setdownloadui=="CLOSE"){
+            return "OPEN" //界面已经关闭，就可以再次打开编辑
+        }
+        var s = state.willdownItem && state.willdownitemtype && state.starttime && state.endtime ? true : false;
+        if(s){
+            //当已经设置完成的时候，可以选中关闭窗口
+            return "CLOSE";
+        }
     }
+    return "OPEN"
 }
 //开始时间
 const starttime = (state, action) => {
@@ -111,6 +117,7 @@ const endtime = (state, action) => {
     }
     return state
 }
+
 
 
 export default data

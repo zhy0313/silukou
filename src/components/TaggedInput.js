@@ -108,6 +108,7 @@ module.exports = React.createClass({
       );
   },
 
+
     //组件更新，组件从prop收到数据
     componentWillReceiveProps: function (nextProps) {
         //从其他组件发送action，引起本组件的内容变化

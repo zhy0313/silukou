@@ -147,5 +147,12 @@ export const endTime = (time) => ({
   time,
 })
 
+/**
+ * 
+ */
+export const setdownloadui = () => ({
+  type: 'SETDOWNLOADUI',
+})
+
 
 

@@ -29,7 +29,15 @@ class TreeView extends React.Component {
             this.setNodeId({nodes: this.state.data});*/
         this.state = {
             //_.clone是创建一个参数的影子，就是克隆一个一模一样的东西
-            data: this.setNodeId(_.clone({nodes: props.data}))
+            // data: ()=>{
+            //     var data = this.setNodeId(_.clone({nodes: props.data}))
+            //     // alert( JSON.stringify( data) )
+            //     // checkRecive(data,props.tags)
+            //     // alert( JSON.stringify( data) )
+            //     return data
+            // }
+            // data: this.setNodeId(_.clone({nodes: props.data}))
+            data: this.test(props.data)
         };
         this.findNodeById = this.findNodeById.bind(this);
         this.setChildrenState = this.setChildrenState.bind(this);
@@ -39,6 +47,26 @@ class TreeView extends React.Component {
         this.addNode = this.addNode.bind(this);
         this.removeNode = this.removeNode.bind(this);
     }
+
+
+test(data){
+    var tree = this.setNodeId(_.clone({nodes: data}))
+    var self = this, s = self.state, p = self.props;
+    // let node = this.findNodeById(this.state.data, nodeId);
+    //  this.setChildrenState(node.nodes, selected);
+    if(p.tags){
+        //循环遍历
+        for(var i=0; i<p.tags.length; i++){
+            //找到节点
+            let node = this.findNodeById(tree, p.tags[i][0])
+            var selected = node.state.selected
+            if(node.nodes){
+                this.setChildrenState(node.nodes, selected);
+            }
+        }
+    }
+    return tree
+}
 
     componentWillReceiveProps(nextProps) {
         // alert( "TreeView显示:"+ JSON.stringify( 'nextProps.currentInput') )
@@ -85,11 +113,13 @@ class TreeView extends React.Component {
     // }
     setNodeId(node,id=0) {
         if (!node.nodes) return;
+        var self = this, s = self.state, p = self.props;
 
         //一开始对连续两个return的写法还看不懂，其实啦，它最后还是返回原来的形式，只不过通过对childNode进行再组织了而已
         return node.nodes.map(childNode => {
             var nid = this.nodesQuantity++;
-            return {
+            
+            var obj = {
                 nodeId: nid, //节点id
                 nodes: this.setNodeId(childNode,nid), //子节点
                 parentNode: id,   //父节点
@@ -103,6 +133,29 @@ class TreeView extends React.Component {
                 param: childNode.param, //节点的参数
                 icon: childNode.icon    //节点图标
             }
+            if( p.tags ){
+                for(var i=0; i<p.tags.length; i++){
+                    if( nid == p.tags[i][0]){
+                        // alert( p.tags[i])
+                        obj.state.selected = !obj.state.selected //取反设置
+                    }
+                }
+            }
+            return obj
+            // return {
+            //     nodeId: nid, //节点id
+            //     nodes: this.setNodeId(childNode,nid), //子节点
+            //     parentNode: id,   //父节点
+            //     //选中状态
+            //     state: {    
+            //         selected: childNode.state ? childNode.state.selected : false,
+            //         expanded: childNode.state ? childNode.state.expanded : false
+            //     },
+            //     text: childNode.text, //节点文字
+            //     code: childNode.code, //节点的code
+            //     param: childNode.param, //节点的参数
+            //     icon: childNode.icon    //节点图标
+            // }
              
         });
 
@@ -221,27 +274,36 @@ class TreeView extends React.Component {
 
     }
 
-    //接受信息检查
+    //确保显示该选中的都是被选中的
     checkRecive(tree,tags){
+        if(tags){
+            return tree  //tags空则直接返回
+        }
+// for(var i=0; i<tags.length; i++){
+//     let node = this.findNodeById(tree, tags[i][0]);
+//     if(!node.state.selected){
+//         node.state.selected = !node.state.selected
+//     }
+// }
+// return tree;
+
         var arr = []
-        var self = this, s = self.state, p = self.props;
         for(var i=0; i<tree.length; i++){
-            var node = this.findNodeById(s.data, tree[i].nodeId);
-            var selected = node.selected
             //遍历传过来的tags
             for(var j=0; j<tags.length; j++){
                 //如果该节点，有在这个数组内，则设置为true
                 if(tree[i].nodeId == tags[j][0]){
-                    //之前选中的，现在没有选中的情况
-                    if(!selected){
-                        selected = !selected
-                        this.setChildrenState(node.nodes, selected); //设置子节点的状态  
-                        this.setState({data: this.state.data}); //设置本模块的状态
-                    }
-                    //之前选中，现在也没有删除，直接跳过
+                    //反正返回是选中的状态
+                    tree[i].state.selected = tree[i].state.selected ? tree[i].state.selected : !tree[i].state.selected;
+                    //子节点也被选中
+                    this.setChildrenState(tree[i].nodes, tree[i].state.selected);
+                }else{
+                    //否则，全部设置没有被选中
+                    tree[i].state.selected = false
                 }
             }
-            if(tree[i].nodes){
+            //如果未被选中,且还有子节点，则调入临时数组中去再检查
+            if(!tree[i].state.selected && tree[i].nodes){
                 for(var j=0; j<tree[i].nodes.length; j++){
                     arr.push(tree[i].nodes[j])
                 }
@@ -250,6 +312,7 @@ class TreeView extends React.Component {
         if(arr.length>0){
             this.checkRecive(arr, tags)
         }
+
     }
     //检查是否被
     checkSelected(tree, tags=[]){
