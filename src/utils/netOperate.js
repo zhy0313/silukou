@@ -57,13 +57,13 @@ var obj = {
                         resolve( data )
                     })
                     res.on('readable', () => {
-                        console.log("Not all Readable streams will emit the 'close' event.")
+                        // console.log("Not all Readable streams will emit the 'close' event.")
                     })
                     res.on('error', (e) => {
                         console.log(`problem with respons: ${e.message}`);
                     });
                     res.on('close', () => {
-                        console.log( "数据连接断开");
+                        // console.log( "数据连接断开");
                     });
                     
                     }

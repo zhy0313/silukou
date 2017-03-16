@@ -27,6 +27,8 @@
   "dependencies": {
     "chart.js": "^1.1.1",
     "gulp": "^3.9.1",
+    "iconv-lite": "^0.4.15",
+    "pg": "^6.1.4",
     "react": "^15.4.2",
     "react-bootstrap-datetimepicker": "0.0.22",
     "react-chartjs": "^0.8.0",

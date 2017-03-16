@@ -34,7 +34,7 @@ export default class MainContents extends React.Component {
             <BarChart data={this.props.chartData} options={this.props.chartOptions} width="90%" height="50%"/>
             
         )
-        }else if(this.props.currentUri=='bbbbbbb'){
+        }else if(this.props.currentUri=='STRATEGYCENTER'){
         return(
             <div className="row placeholders">
             <div className="col-xs-6 col-sm-3 placeholder">
@@ -59,7 +59,7 @@ export default class MainContents extends React.Component {
             </div>
             </div>
         )
-        }else if(this.props.currentUri=='ccccccc'){
+        }else if(this.props.currentUri=='STATISTICSCENTER'){
         return(
             <div className="table-responsive">
             <table className="table table-striped">

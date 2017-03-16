@@ -7,9 +7,21 @@
 import { GetData } from '../utils/GetData'
 
 
+//下载并更新股票列表信息
+function stocklist(store){
+    //放在中间件中，凡是进入软件之后，有操作，就会自动检查，股票列表文件是否是最新的
+    var sourcedata = store.data.currentDataSource   //获取股票数据源
+    //股票列表文件stocklist
+}
+
+
+
 export default store => next => action => {
     console.log('hello DataCenter', action)
     //用户提交制定好的action过来，执行相应的数据操作
+
+    var gd = GetData.create()
+    gd.getNewStockList( next)
 
     if ( action.type !== 'DOWN_STOCK_LIST') {
         //没有定义的API就直接返回原先的store

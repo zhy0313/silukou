@@ -24,25 +24,33 @@ var data = [
             [{
                 text: "A股",
                 code: "ASTOCK",
-                param:"",
+                param:"[%22hq%22,%22hs_a%22,%22{sort}%22,{asc},{page},{num}]",
                 nodes: 
                     [{
                         text: "创业板",
                         code: "CYB",
-                        param:"",
+                        param:"[%22hq%22,%22cyb%22,%22{sort}%22,{asc},{page},{num}]",
                     },{
                         text: "中小板块",
                         code: "ZXBK",
-                        param:"",
+                        param:"[%22hq%22,%22zxqy%22,%22{sort}%22,{asc},{page},{num}]",
+                    },{
+                        text: "上海主板",
+                        code: "ZXBK",
+                        param:"[%22jjhq%22,{page},{num},%22{sort}%22,{asc},%22zhishu_000001%22]",
                     }]
+            },{
+                text: "A股指数",
+                code: "ZHISHU",
+                param:"[%22hq%22,%22dpzs%22,%22{sort}%22,{asc},{page},{num}]",
             },{
                 text: "港股",
                 code: "GSTOCK",
-                param:"",
+                param:"[%22hk%22,%22qbgg_hk%22,%22{sort}%22,{asc},{page},{num}]",
             },{
                 text: "美股",
                 code: "MSTOCK",
-                param:"",
+                param:"[%22us_c%22,0,%22%22,%22{sort}%22,{asc},{page},{num}]",
             }]
     },{
         text: "基金",

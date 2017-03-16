@@ -1,0 +1,8 @@
+insert into stocklist( symbol, code, name, trade, pricechange, changepercent, buy,
+    sell, settlement, open, high, low, volume, amount, ticktime,
+    per,  per_d, nta,  pb,  mktcap,  nmc, turnoverratio, favor, guba
+) values('sz3026106','300606','sdfsdf','46.600','0.570','1.238','46.590','46.600','46.030','45.800','46.860','45.510','7318832','338563846','15:55:03',77.667,0,'3.6300',12.837,415672,103918,32.81987,'','');
+
+
+
+insert into stocklist( symbol, code, name)values('sz30206106','300606','sdfsdf');
