@@ -38,6 +38,7 @@ function data(data = {}, action) {
         setdownloadui: setdownloadui(data,action), //默认情况下，软件开始后是没有设置的
         starttime: starttime(data.starttime,action), //开始时间
         endtime: endtime(data.endtime,action), //结束时间
+        isDownStockList: isdownstocklist(data.isDownStockList, action ) //
 
     }
 }
@@ -61,15 +62,21 @@ const getStockList = (state, action) => {
         return action.stockList;
     }
 }
+//判断第一次执行下载股票列表操作，作为一个标记
+const isdownstocklist = (state, action) => {
+    if(action.type == 'DOWN_STOCK_LIST'){
+        return true //
+    }
+    return state //
+}
 /**
  * 通过middleware获取所有股票代码
  */
 const getStockList1 = (state, action) => {
-    
     if(action.type == 'DOWN_STOCK_LIST'){
         return action.data;
     }
-    
+    return state //不返回state，要没有了状态的！！！ attention
 }
 
 /**

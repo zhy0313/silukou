@@ -257,18 +257,14 @@ export var GetData = {
                 // })
 
 
-                console.log(op )
-
                 var pages = data[0].count / op.number
                 pages += data[0].count % op.number > 0 ? 1 : 0; //如果还有余数的话，就加一
                 op.page = op.page+1
 
-
                 while(op.page < pages){
-                    // console.dir( op )
                     return g.download(op, next) //继续申请数据
                 }
-                // console.dir( op.page )
+                
                 //这里应该写next的代码，因为，这个时候，totalData已经获取到了所有的股票代码及相关数据了
                 next({
                     type: 'DOWN_STOCK_LIST',
@@ -317,6 +313,7 @@ export var GetData = {
             var op = { page:0, number: 500, addr:'sina' }
             op = Object.assign( op,  astock )
             g.download(op, next)
+            //重新修改op 会有问题的，应为object 里的元素会被替换的，造成不是你想要的结果
             // op = Object.assign( op,  cyb )
             // g.download(op, next)
             // op = Object.assign( op,  zxqy )

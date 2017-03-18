@@ -20,22 +20,19 @@ export default store => next => action => {
     console.log('hello DataCenter', action)
     //用户提交制定好的action过来，执行相应的数据操作
 
-    var gd = GetData.create()
-    gd.getNewStockList( next)
-
-    if ( action.type !== 'DOWN_STOCK_LIST') {
-        //没有定义的API就直接返回原先的store
-        return next(action)
+    //获取所有状态
+    var state = store.getState() 
+    //开启软件获取股票列表,第一次执行
+    if(!state.data.isDownStockList){
+        
+        var gd = GetData.create()
+        gd.getNewStockList( next)
     }
 
-    //获取所有股票代码及其他一些数据
-    var gd = GetData.create()
-    var op = {
-        page:0,
-        number: 500
-    }
-    gd.download(op ,next )
-    
+
+
+
+
 
     let result = next(action)
     console.log('byby DataCenter', store.getState())
