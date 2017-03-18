@@ -140,7 +140,7 @@ class DownloadCenter extends React.Component {
                         <div className="panel-heading">传输列表</div>
                         <ul className="list-group">
                             <li className="list-group-item">
-                            <button className="btn btn-default">开始</button>
+                            <button className="btn btn-default" onClick={() => p.dcd.startdownloading()}>开始</button>
                             <button className="btn btn-primary">暂停</button>
                             <button className="btn btn-danger">删除</button>
                             </li>

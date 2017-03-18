@@ -154,5 +154,9 @@ export const setdownloadui = () => ({
   type: 'SETDOWNLOADUI',
 })
 
+//点击开始下载按钮，正式开始根据state状态，开始下载
+export const startdownloading = () => ({
+  type: 'STARTDOWNLOADING'
+})
 
-
+//

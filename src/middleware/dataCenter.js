@@ -19,17 +19,25 @@ function stocklist(store){
 export default store => next => action => {
     console.log('hello DataCenter', action)
     //用户提交制定好的action过来，执行相应的数据操作
-
     //获取所有状态
     var state = store.getState() 
+    var gd = GetData.create()
+
+    //获取所有股票日线数据,这个代码没有问题
+    // gd.getSinaStockDailyHistory(state.data, next)
+ gd.getSinaStockMinsHistory(state.data, next)
+    
     //开启软件获取股票列表,第一次执行
-    if(!state.data.isDownStockList){
+    // if(!state.data.isDownStockList){
         
-        var gd = GetData.create()
-        gd.getNewStockList( next)
+    //     gd.getNewStockList( next)
+    // }
+
+    //这里加一个条件，用来控制，下载分时线
+    if(state.data.startDownloading){
+        
+        gd.getSinaStockMinsHistory(state.data, next)
     }
-
-
 
 
 

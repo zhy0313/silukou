@@ -325,14 +325,204 @@ export var GetData = {
             // op = Object.assign( op,  mstock )
             // g.download(op, next)
 
-// localOperate
+         }
+
+         //按时间来循环
+         g.getSymbolHistoryMinsTimeLoop = function( minsoption,options,symbols ){
+            //这里负责，遍历掉每一个时间节点
+            //组织URL
+            console.log( minsoption )
+            console.log( options )
+            console.log( options.symbol )
+            g.makeSinaHistoryUrl( options )
+            options.starttime[0] -= 0;
+            options.starttime[1] -= 0;
+            options.starttime[2] -= 0;           
+            options.starttime[1] += 1;
+            if(options.starttime[1]>12){
+                options.starttime[0] += 1
+                options.starttime[1] = 1
+            }
+            //时间节点是否走完，走完则返回到下一个symbol
+            if( (options.starttime[0]>minsoption.endtime[0]) ||  (options.starttime[0]==minsoption.endtime[0] && options.starttime[1]>minsoption.endtime[1]) ){
+                //时间走到底了，返回
+                return g.getSymbolHistoryMins( symbols, minsoption )
+            }
+            var time = options.starttime[0]+'-'+options.starttime[1]+'-'+options.starttime[2]
+            console.log( g.options )
+            
+            //进行网络请求
+            no.get( g.options ).then((data)=>{
+                //在这里就要进行数据库插入处理了
+                
+
+                console.log( "返回数据了" )
+                console.log( data )
+                // var insertsql = "insert into stockmins(symbol,time,data ) values('"+minsoption.symbol+"','"+time+"','"+ data +"')";
+                // console.log( insertsql )
+                //现在直接写插入数据
+                // dbo.query( insertsql ).then((res)=>{
+                //     console.log( "数据插入成功" + res )
+                // })
+                
+                return g.getSymbolHistoryMinsTimeLoop( minsoption,options,symbols )
+            })
+
+         }
+
+
+         //得到一个symol，然后获取该symbol的历史一分钟线
+         //minsoption 包含了开始时间以及结束时间
+         //symbos 股票列表
+         g.getSymbolHistoryMins = function( symbols, minsoption ){
+            if(symbols.length==0){
+                //已经没有元素了,直接返回
+                return
+            }
+            //有元素，那就继续pop
+            var symbol = symbols.pop();//这里负责pop掉每一个元素
+            var options = {
+                starttime: [ minsoption.starttime[0],minsoption.starttime[1],minsoption.starttime[2] ] ,
+                symbol: symbol,
+                type: minsoption.type
+            }
+            // console.log('getSymbolHistoryMins')
+            // console.log( minsoption )
+            // console.log( symbols )
+ 
+            //调用该函数,用于处理一直股票，中有很多时间段具体文件，需要多次网络请求
+            g.getSymbolHistoryMinsTimeLoop( minsoption,options,symbols )
+         }
+
+
+         //得到一个symbol,然后获取该symbol的历史日线
+         g.getSymbolHistoryDaily = function( symbols ){
+            if(symbols.length==0){
+                //已经没有元素了,直接返回
+                return
+            }
+            //有元素，那就继续pop
+            var symbol = symbols.pop();
+            var historyop = {}
+            historyop.symbol = symbol
+            historyop.type = 'DAILY'
+
+            //组织URL
+            g.makeSinaHistoryUrl(historyop )
+            //进行网络请求
+            no.get( g.options ).then((data)=>{
+                //在这里就要进行数据库插入处理了
+                var insertsql = "insert into stockdaily(symbol,daily ) values('"+symbol+"','"+ data +"')";
+                //现在直接写插入数据
+                dbo.query( insertsql ).then((res)=>{
+                    console.log( "数据插入成功" + res )
+                })
+                return g.getSymbolHistoryDaily(symbols) //尾优化，直接递归，知道全部插入数据
+            })
+         }
+
+         //下载一分钟线
+         g.getSinaStockMinsHistory = function( data, next){
+            //验证时间范围是否符合要求，分时线时间大于2008年，小于今天
+            //开始时间小于等于结束时间
+            // var starttime = data.starttime.split('-')
+            // var endtime = data.endtime.split('-')
+            var starttime = [2008,'01','01']
+            var endtime = [2016,'11','01']
+ console.log( endtime )
+            // var thisyear = new Date().getFullYear()
+            // var thismonth = new Date().getMonth()+1
+            //设置时间条件为合理区间内
+            // if( starttime[0]<2008 ){ starttime[0] = 2008 } //开始年份小于2008，则默认设置为2008
+            // if( endtime[0]>thisyear ){ endtime[0]=thisyear  } //结束年份比今年还晚，则设置为今年
+            // //在今年，开始月份比本月还晚，则设置开始月份和结束月份都为本月
+            // if( starttime[0]==thisyear && starttime[1]>thismonth ){  starttime[1] = thismonth; endtime[1] = thismonth;  } 
+            // //在今年，结束时间晚于本月，则设置结束时间为本月
+            // if( starttime[0]==thisyear && endtime[1]>thismonth ){ endtime[1] = thismonth;  } 
+            // if(starttime[0]>endtime[0]){ starttime[0] = endtime[0]  } //开始年份比结束年份还晚，则设置为结束年份
+            // if( starttime[0]==endtime[0] && starttime[1]>endtime[1] ){  starttime[1] = endtime[1] } //开始月份比结束月份晚，设置为结束月份
+           
+            var minsoption = {
+                starttime: starttime,
+                endtime: endtime,
+                type: 'MINS'
+            }
+            console.log( minsoption )
+            //首先要检索，数据库中股票列表stocklist表中的
+            //检索数据表stocklist中的股票列表，饭后根据这个股票列表，来请求每一只股票的数据，并插入的数据库中
+            var select = "select symbol from stocklist"
+            dbo.query( select ).then( (seldata)=>{
+                //获取纯正的股票列表数组
+                for(var i=0; i<seldata.length; i++){
+                    seldata[i] = seldata[i].symbol
+                }
+                //请求数据，并插入数据库
+                g.getSymbolHistoryMins( seldata, minsoption ) 
+            })
+
 
          }
 
         /**
-         * 判断是否需要更新此文件
+         * 下载日线
+         * next 为middleware 传入的dispatch，用来发送消息用的
+         * data 是用来传送软件store的中state.data项目下设定好的状态
          */
+        g.getSinaStockDailyHistory = function(data, next){
+            //首先要检索，数据库中股票列表stocklist表中的
+            //检索数据表stocklist中的股票列表，饭后根据这个股票列表，来请求每一只股票的数据，并插入的数据库中
+            var select = "select symbol from stocklist"
+            dbo.query( select ).then( (seldata)=>{
+                //获取纯正的股票列表数组
+                for(var i=0; i<seldata.length; i++){
+                    seldata[i] = seldata[i].symbol
+                }
+                //请求数据，并插入数据库
+                g.getSymbolHistoryDaily(seldata)
+            })
+        }
 
+        /**
+         * 构建申请历史数据的新浪请求URL
+         * 
+         */
+        g.makeSinaHistoryUrl = function(options){
+            //分钟线URL组织的格式
+            // var url = 'http://finance.sina.com.cn/realstock/company/' + stock_code + '/hisdata/' + year + '/' + str_month + '.js';
+            //日线组织的格式
+            // http://finance.sina.com.cn/realstock/company/sh000002/hisdata/klc_kl.js
+            //当天的实时数据
+            //当天到那一时刻的分钟数据，有没有的？应该有的
+
+            var symbol = options.symbol
+            var year = options.starttime[0]
+            var month = options.starttime[1]
+            
+            var path = ''
+            if(options.type=='DAILY'){
+                var path = '/realstock/company/' + symbol + '/hisdata/klc_kl.js';
+            }else if(options.type=='MINS'){
+                //这个是历史的分钟线数据
+                month -= 0
+                if( month < 10 ){
+                    month = '0' + month;
+                }
+                var path = '/realstock/company/'+symbol+'/hisdata/'+year+'/'+month+'.js';
+            }else{
+                throw new Error("没有选中下载数据类型，分钟线还是日线");
+            }
+            
+            
+            //通过直接给this.options赋值，来作为当前的提交URL
+            g.options = Object.assign(
+                g.options,
+                {
+                    hostname: 'finance.sina.com.cn',
+                    // path: '/d/api/openapi_proxy.php/?__s=[[%22hq%22,%22hs_a%22,%220%22,0,page,num]]'
+                    path: path
+                }
+            )
+        }
         
 
          return g
@@ -352,3 +542,9 @@ export var GetData = {
 // }
 // gd.download(op)
 
+//http://finance.sina.com.cn/h5charts/tchart.html?symbol=sh000001&date=2016-06-27&rangeselector=true&indicator=tvol
+
+
+// http://finance.sina.com.cn/realstock/company/sh600628/hisdata/2008/01.js
+
+// http://finance.sina.com.cn/realstock/company/sh600628/hisdata/2007/02.js

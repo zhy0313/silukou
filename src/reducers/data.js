@@ -38,7 +38,8 @@ function data(data = {}, action) {
         setdownloadui: setdownloadui(data,action), //默认情况下，软件开始后是没有设置的
         starttime: starttime(data.starttime,action), //开始时间
         endtime: endtime(data.endtime,action), //结束时间
-        isDownStockList: isdownstocklist(data.isDownStockList, action ) //
+        isDownStockList: isdownstocklist(data.isDownStockList, action ), //用于判断是否第一次下载
+        startDownloading:startdownloading(data.startDownloading,action), //点击开始下载按钮，根据state状态开始下载
 
     }
 }
@@ -108,7 +109,10 @@ const setdownloadui = (state, action) => {
             return "CLOSE";
         }
     }
-    return "OPEN"
+    if(!state.setdownloadui){
+        return "OPEN"
+    }
+    return state.setdownloadui
 }
 //开始时间
 const starttime = (state, action) => {
@@ -121,6 +125,13 @@ const starttime = (state, action) => {
 const endtime = (state, action) => {
     if(action.type == 'EDNTIME'){
         return action.time
+    }
+    return state
+}
+//开始下载，根据state的状态
+const startdownloading = (state, action) => {
+    if(action.type == 'STARTDOWNLOADING'){
+        return true
     }
     return state
 }

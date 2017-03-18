@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { toggleTodo,willDownItem,willDownItemType,startTime,endTime , setdownloadui } from '../actions'
+import { toggleTodo,willDownItem,willDownItemType,startTime,endTime , setdownloadui,startdownloading } from '../actions'
 // import { * } from '../actions'
 import MainContents from '../components/MainContents'
 
@@ -215,7 +215,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     setdownloadui:() => {
         dispatch(setdownloadui())
+    },
+    startdownloading:() => {
+        dispatch(startdownloading())
     }
+    
   }
 })
 

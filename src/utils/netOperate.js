@@ -37,35 +37,38 @@ var obj = {
             var p = new Promise(function(resolve, reject){
                 var req = http.request( options, (res)=>{
                     if(res.statusCode=='200'){
-                    //如果使用编码，数据就不能得到完整性确认了
-                    // res.setEncoding('utf8');
-                    var data = '';
-                    var dataLength = 0;
-                    // 由于新浪是live-active 的所以没有content-length
-                    // var contentLength =  res.headers["content-length"];
+                        //如果使用编码，数据就不能得到完整性确认了
+                        // res.setEncoding('utf8');
+                        var data = '';
+                        var dataLength = 0;
+                        // 由于新浪是live-active 的所以没有content-length
+                        // var contentLength =  res.headers["content-length"];
 
-                    res.on('data', (chunk) => {
-                        data += chunk;
-                        dataLength += chunk.length;
-                    });
-                    
-                    res.on('end', () => {
-                        // callback( data ); //调用回调函数，获取数据
-                        // console.log(' 数据下载完成，数据完整'+dataLength)
-                        // console.log( res.req.path )
-                        // resolve('数据成功返回')
-                        resolve( data )
-                    })
-                    res.on('readable', () => {
-                        // console.log("Not all Readable streams will emit the 'close' event.")
-                    })
-                    res.on('error', (e) => {
-                        console.log(`problem with respons: ${e.message}`);
-                    });
-                    res.on('close', () => {
-                        // console.log( "数据连接断开");
-                    });
-                    
+                        res.on('data', (chunk) => {
+                            data += chunk;
+                            dataLength += chunk.length;
+                        });
+                        
+                        res.on('end', () => {
+                            // callback( data ); //调用回调函数，获取数据
+                            // console.log(' 数据下载完成，数据完整'+dataLength)
+                            console.log( '数据成功返回' )
+                            // resolve('数据成功返回')
+                            resolve( data )
+                        })
+                        res.on('readable', () => {
+                            console.log("Not all Readable streams will emit the 'close' event.")
+                        })
+                        res.on('error', (e) => {
+                            console.log(`problem with respons: ${e.message}`);
+                        });
+                        res.on('close', () => {
+                            console.log( "数据连接断开");
+                        });
+                        
+                    }else if( res.statusCode == '404'){
+                        console.log( "404 Not Found");
+                        resolve( '' )
                     }
                 });
                 req.on('error', (e) => {
