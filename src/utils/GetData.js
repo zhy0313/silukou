@@ -349,22 +349,23 @@ export var GetData = {
                 return g.getSymbolHistoryMins( symbols, minsoption )
             }
             var time = options.starttime[0]+'-'+options.starttime[1]+'-'+options.starttime[2]
+            var symbol = options.symbol
             console.log( g.options )
             
             //进行网络请求
             no.get( g.options ).then((data)=>{
                 //在这里就要进行数据库插入处理了
                 
-
-                console.log( "返回数据了" )
-                console.log( data )
-                // var insertsql = "insert into stockmins(symbol,time,data ) values('"+minsoption.symbol+"','"+time+"','"+ data +"')";
-                // console.log( insertsql )
-                //现在直接写插入数据
-                // dbo.query( insertsql ).then((res)=>{
-                //     console.log( "数据插入成功" + res )
-                // })
-                
+                if(data){
+                    console.log( "返回数据了" )
+                    console.log( data )
+                    var insertsql = "insert into stockmins(symbol,time,data ) values('"+symbol+"','"+time+"','"+ data +"')";
+                    console.log( insertsql )
+                    // 现在直接写插入数据
+                    dbo.query( insertsql ).then((res)=>{
+                        console.log( "数据插入成功" + res )
+                    })
+                }
                 return g.getSymbolHistoryMinsTimeLoop( minsoption,options,symbols )
             })
 
@@ -428,8 +429,8 @@ export var GetData = {
             // var starttime = data.starttime.split('-')
             // var endtime = data.endtime.split('-')
             var starttime = [2008,'01','01']
-            var endtime = [2016,'11','01']
- console.log( endtime )
+            var endtime = [2017,'03','18']
+
             // var thisyear = new Date().getFullYear()
             // var thismonth = new Date().getMonth()+1
             //设置时间条件为合理区间内

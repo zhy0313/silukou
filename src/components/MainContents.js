@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
 import DownloadCenter from './DownloadCenter'
 
+import ReactEcharts from 'echarts-for-react'; 
+
 var BarChart = require("react-chartjs").Bar;
 
 export default class MainContents extends React.Component {
@@ -25,6 +27,26 @@ export default class MainContents extends React.Component {
 
     render() {
 
+     var option = {
+            title: {
+                text: 'ECharts 入门示例'
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+
+
         if(this.props.currentUri=='DOWNLOADCENTER'){
         return(
             <DownloadCenter tv={this.props.tv} tags={this.props.tags} currentInput={this.props.currentInput} checkboxs={this.props.checkboxs} dcs={this.props.dcs} dcd={this.props.dcd}  />
@@ -32,32 +54,20 @@ export default class MainContents extends React.Component {
         }else if(this.props.currentUri=='CHARTCENTER'){
         return(
             <BarChart data={this.props.chartData} options={this.props.chartOptions} width="90%" height="50%"/>
+
             
         )
         }else if(this.props.currentUri=='STRATEGYCENTER'){
         return(
-            <div className="row placeholders">
-            <div className="col-xs-6 col-sm-3 placeholder">
-                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" className="img-responsive" alt="Generic placeholder thumbnail" />
-                <h4>Label</h4>
-                <span className="text-muted">Something else</span>
-            </div>
-            <div className="col-xs-6 col-sm-3 placeholder">
-                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" className="img-responsive" alt="Generic placeholder thumbnail" />
-                <h4>Label</h4>
-                <span className="text-muted">Something else</span>
-            </div>
-            <div className="col-xs-6 col-sm-3 placeholder">
-                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" className="img-responsive" alt="Generic placeholder thumbnail" />
-                <h4>Label</h4>
-                <span className="text-muted">Something else</span>
-            </div>
-            <div className="col-xs-6 col-sm-3 placeholder">
-                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" className="img-responsive" alt="Generic placeholder thumbnail" />
-                <h4>Label</h4>
-                <span className="text-muted">Something else</span>
-            </div>
-            </div>
+            
+            <ReactEcharts
+                option={option} 
+                notMerge={true}
+                lazyUpdate={true}
+                theme={"theme_name"}
+                onChartReady={this.onChartReadyCallback}
+                 />            
+            
         )
         }else if(this.props.currentUri=='STATISTICSCENTER'){
         return(
