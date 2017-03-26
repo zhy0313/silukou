@@ -118,14 +118,14 @@ class DownloadCenter extends React.Component {
                 var start = p.dcs.starttime
                 var end = p.dcs.endtime
                 return (
-                    <ul class="list-group">
-                        <li class="list-group-item">
+                    <ul className="list-group">
+                        <li className="list-group-item">
                             品种范围 : {downloaditem}
                         </li>
-                        <li class="list-group-item">
+                        <li className="list-group-item">
                             数据类型 : {willdownitemtype}
                         </li>
-                        <li class="list-group-item">
+                        <li className="list-group-item">
                             开始时间 : {start}    结束时间 : {end}
                         </li>
                     </ul>

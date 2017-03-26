@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react'
 import DownloadCenter from './DownloadCenter'
 
-import ReactEcharts from 'echarts-for-react'; 
+import Test from './demo/Test'
 
-var BarChart = require("react-chartjs").Bar;
+import ReactEcharts from 'echarts-for-react'; 
+import SinaKL from './SinaKL'
+
 
 export default class MainContents extends React.Component {
     constructor(props) {
@@ -27,24 +29,115 @@ export default class MainContents extends React.Component {
 
     render() {
 
-     var option = {
-            title: {
-                text: 'ECharts 入门示例'
+
+var data1 = [];
+var data2 = [];
+var data3 = [];
+
+var random = function (max) {
+    return (Math.random() * max).toFixed(3);
+};
+
+for (var i = 0; i < 500; i++) {
+    data1.push([random(15), random(10), random(1)]);
+    data2.push([random(10), random(10), random(1)]);
+    data3.push([random(15), random(10), random(1)]);
+}
+
+var options = {
+    animation: false,
+    legend: {
+        data: ['scatter', 'scatter2', 'scatter3']
+    },
+    tooltip: {
+    },
+    xAxis: {
+        type: 'value',
+        min: 'dataMin',
+        max: 'dataMax',
+        splitLine: {
+            show: true
+        }
+    },
+    yAxis: {
+        type: 'value',
+        min: 'dataMin',
+        max: 'dataMax',
+        splitLine: {
+            show: true
+        }
+    },
+    dataZoom: [
+        {
+            type: 'slider',
+            show: true,
+            xAxisIndex: [0],
+            start: 1,
+            end: 35
+        },
+        {
+            type: 'slider',
+            show: true,
+            yAxisIndex: [0],
+            left: '93%',
+            start: 29,
+            end: 36
+        },
+        {
+            type: 'inside',
+            xAxisIndex: [0],
+            start: 1,
+            end: 35
+        },
+        {
+            type: 'inside',
+            yAxisIndex: [0],
+            start: 29,
+            end: 36
+        }
+    ],
+    series: [
+        {
+            name: 'scatter',
+            type: 'scatter',
+            itemStyle: {
+                normal: {
+                    opacity: 0.8
+                }
             },
-            tooltip: {},
-            legend: {
-                data:['销量']
+            symbolSize: function (val) {
+                return val[2] * 40;
             },
-            xAxis: {
-                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+            data: data1
+        },
+        {
+            name: 'scatter2',
+            type: 'scatter',
+            itemStyle: {
+                normal: {
+                    opacity: 0.8
+                }
             },
-            yAxis: {},
-            series: [{
-                name: '销量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
-            }]
-        };
+            symbolSize: function (val) {
+                return val[2] * 40;
+            },
+            data: data2
+        },
+        {
+            name: 'scatter3',
+            type: 'scatter',
+            itemStyle: {
+                normal: {
+                    opacity: 0.8,
+                }
+            },
+            symbolSize: function (val) {
+                return val[2] * 40;
+            },
+            data: data3
+        }
+    ]
+}
 
 
         if(this.props.currentUri=='DOWNLOADCENTER'){
@@ -53,15 +146,15 @@ export default class MainContents extends React.Component {
         )
         }else if(this.props.currentUri=='CHARTCENTER'){
         return(
-            <BarChart data={this.props.chartData} options={this.props.chartOptions} width="90%" height="50%"/>
-
+            
+            <SinaKL />
             
         )
         }else if(this.props.currentUri=='STRATEGYCENTER'){
         return(
             
             <ReactEcharts
-                option={option} 
+                option={options} 
                 notMerge={true}
                 lazyUpdate={true}
                 theme={"theme_name"}
